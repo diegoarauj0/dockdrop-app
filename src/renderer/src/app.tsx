@@ -1,7 +1,13 @@
+import { ThemeProvider } from "./providers/ThemeProvider";
+import { RouterProvider } from "react-router";
+import GlobalStyle from "./globalStyle";
+import { router } from "./router";
+
 export function App() {
   return (
-    <main>
-      <p>Ola</p>
-    </main>
-  )
+    <ThemeProvider>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }

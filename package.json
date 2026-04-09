@@ -22,7 +22,10 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "dockerode": "^4.0.10"
+    "dockerode": "^4.0.10",
+    "lucide-react": "^1.7.0",
+    "react-router": "^7.14.0",
+    "styled-components": "^6.3.12"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
