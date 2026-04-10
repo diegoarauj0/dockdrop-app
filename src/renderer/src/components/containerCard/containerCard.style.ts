@@ -2,26 +2,26 @@ import styled from "styled-components";
 
 export const Card = styled.article<{ $status: "active" | "inactive" }>`
   background: linear-gradient(${(props) => `${props.theme["bg-light"]}, ${props.theme.bg}`});
-  border-top: 1px solid ${(props) => props.theme["highlight"]};
-  border-radius: 14px;
+  border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["highlight"]};
+  border-radius: ${(props) => props.theme.radii.lg};
   display: flex;
-  gap: 14px;
-  padding: 14px 16px;
+  gap: ${(props) => props.theme.spacing.md};
+  padding: ${(props) => props.theme.spacing.md};
 
-  @media (max-width: 560px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.compact}px) {
     flex-direction: column;
   }
 `;
 
 export const Grip = styled.div`
   align-content: center;
-  min-width: 20px;
+  min-width: ${(props) => props.theme.spacing.lg};
   cursor: grab;
 
   svg {
     color: ${(props) => props.theme.text};
-    height: 25px;
-    width: 25px;
+    height: ${(props) => props.theme.sizes.iconSm};
+    width: ${(props) => props.theme.sizes.iconSm};
   }
 `;
 
@@ -29,7 +29,7 @@ export const Content = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  gap: 14px;
+  gap: ${(props) => props.theme.spacing.md};
   min-width: 0;
 `;
 
@@ -37,39 +37,40 @@ export const Header = styled.div`
   align-items: flex-start;
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: ${(props) => props.theme.spacing.sm};
 `;
 
 export const TitleGroup = styled.div`
   align-items: center;
   display: flex;
-  gap: 10px;
+  gap: ${(props) => props.theme.spacing.xs};
   min-width: 0;
 `;
 
 export const IconWrapper = styled.div<{ $status: "active" | "inactive" }>`
   align-items: center;
   background-color: ${(props) => props.theme["bg-dark"]};
-  border: 1px solid ${(props) => (props.$status === "active" ? props.theme.success : props.theme.danger)};
-  border-radius: 10px;
+  border: ${(props) => props.theme["border-widths"].thin} solid
+    ${(props) => (props.$status === "active" ? props.theme.success : props.theme.danger)};
+  border-radius: ${(props) => props.theme.radii.md};
   color: ${(props) => (props.$status === "active" ? props.theme.success : props.theme.danger)};
   display: flex;
   flex-shrink: 0;
-  height: 34px;
+  height: ${(props) => props.theme.sizes.iconMd};
   justify-content: center;
-  width: 34px;
+  width: ${(props) => props.theme.sizes.iconMd};
 `;
 
 export const TitleText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: ${(props) => props.theme.spacing.xxs};
   min-width: 0;
 `;
 
 export const Name = styled.strong`
   color: ${(props) => props.theme.text};
-  font-size: 0.92rem;
+  font-size: ${(props) => props.theme["font-sizes"].md};
   font-weight: 700;
   line-height: 1.1;
   overflow: hidden;
@@ -79,7 +80,7 @@ export const Name = styled.strong`
 
 export const Image = styled.span`
   color: ${(props) => props.theme["text-muted"]};
-  font-size: 0.7rem;
+  font-size: ${(props) => props.theme["font-sizes"].sm};
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -88,7 +89,7 @@ export const Image = styled.span`
 
 export const Actions = styled.div`
   display: flex;
-  gap: 6px;
+  gap: ${(props) => props.theme.spacing.xs};
 `;
 
 export const ActionLink = styled.button<{ $tone: "neutral" | "danger" }>`
@@ -97,7 +98,7 @@ export const ActionLink = styled.button<{ $tone: "neutral" | "danger" }>`
   border: none;
   color: ${(props) => (props.$tone === "danger" ? props.theme.danger : props.theme["text-muted"])};
   cursor: pointer;
-  font-size: 0.62rem;
+  font-size: ${(props) => props.theme["font-sizes"].xs};
   font-weight: 700;
   letter-spacing: 0.04em;
   display: flex;
@@ -105,33 +106,33 @@ export const ActionLink = styled.button<{ $tone: "neutral" | "danger" }>`
   align-items: center;
   background-color: ${(props) => props.theme.bg};
   text-transform: uppercase;
-  padding: 3px 12px;
-  border-radius: 12px;
+  padding: ${(props) => props.theme.spacing.xxs} ${(props) => props.theme.spacing.sm};
+  border-radius: ${(props) => props.theme.radii.md};
 
   &:hover {
     transition: 0.1s;
-    transform: translate(0px, -2px);
+    transform: translateY(-2);
   }
 
   svg {
-    margin-left: 5px;
+    margin-left: ${(props) => props.theme.spacing.xxs};
   }
 `;
 
 export const StatusDot = styled.span<{ $status: "active" | "inactive" }>`
   background-color: ${(props) => (props.$status === "active" ? props.theme.success : props.theme.danger)};
-  border-radius: 999px;
+  border-radius: ${(props) => props.theme.radii.pill};
   display: block;
-  height: 8px;
-  width: 8px;
+  height: ${(props) => props.theme.sizes.dot};
+  width: ${(props) => props.theme.sizes.dot};
 `;
 
 export const Metrics = styled.div`
-  border-top: 1px solid ${(props) => props.theme["border-muted"]};
+  border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["border-muted"]};
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
-  @media (max-width: 560px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.compact}px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -139,25 +140,25 @@ export const Metrics = styled.div`
 export const Metric = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 12px 10px 2px;
+  gap: ${(props) => props.theme.spacing.xxs};
+  padding: ${(props) => props.theme.spacing.sm} ${(props) => props.theme.spacing.xs} ${(props) => props.theme.spacing.xxs};
   text-align: center;
 
   & + & {
-    border-left: 1px solid ${(props) => props.theme["border-muted"]};
+    border-left: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["border-muted"]};
   }
 
-  @media (max-width: 560px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.compact}px) {
     & + & {
       border-left: none;
-      border-top: 1px solid ${(props) => props.theme["border-muted"]};
+      border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["border-muted"]};
     }
   }
 `;
 
 export const MetricLabel = styled.span`
   color: ${(props) => props.theme["text-muted"]};
-  font-size: 0.58rem;
+  font-size: ${(props) => props.theme["font-sizes"].xs};
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -165,6 +166,6 @@ export const MetricLabel = styled.span`
 
 export const MetricValue = styled.strong`
   color: ${(props) => props.theme.text};
-  font-size: 0.78rem;
+  font-size: ${(props) => props.theme["font-sizes"].sm};
   font-weight: 700;
 `;

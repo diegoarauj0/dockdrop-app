@@ -25,7 +25,7 @@ const inactiveContainers = [
   },
 ];
 
-export function InactiveContainersArea() {
+export function InactiveContainersArea(): React.ReactNode {
   return (
     <S.Section>
       <S.Header>

@@ -3,46 +3,51 @@ import styled from "styled-components";
 export const Dashboard = styled.div`
   display: flex;
   height: 100%;
-  overflow-y: auto;
   flex-direction: column;
-  gap: 24px;
+  gap: ${(props) => props.theme.spacing.lg};
 `;
 
 export const TopBar = styled.div`
   position: sticky;
   top: 0%;
   width: 100%;
-  border: 5px solid ${props => props.theme["bg-dark"]};
-  background-color: ${props => props.theme.bg};
+  border: ${(props) => props.theme["border-widths"].strong} solid ${(props) => props.theme["bg-dark"]};
+  background-color: ${(props) => props.theme.bg};
   align-items: center;
-  border-radius: 12px;
-  padding: 18px 24px;
+  border-radius: ${(props) => props.theme.radii.md};
+  padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.lg};
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: 900px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
     flex-direction: column;
     align-items: stretch;
-    padding: 16px;
+    padding: ${(props) => props.theme.spacing.md};
   }
 `;
 
 export const SearchWrapper = styled.label`
-  background-color: ${props => props.theme["bg-light"]};
-  border: 1px solid ${props => props.theme.border};
-  border-radius: 999px;
+  background-color: ${(props) => props.theme["bg-light"]};
+  border: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.border};
+  border-radius: ${(props) => props.theme.radii.pill};
   color: ${(props) => props.theme["text-muted"]};
-  max-width: 460px;
+  max-width: ${(props) => props.theme.sizes["content-max-width"]};
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 10px;
-  min-height: 48px;
-  padding: 0 16px;
+  gap: ${(props) => props.theme.spacing.xs};
+  min-height: ${(props) => props.theme.sizes["control-min-height"]};
+  padding: 0 ${(props) => props.theme.spacing.md};
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     color 0.2s ease;
+
+  
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
+    margin-bottom: ${props => props.theme.spacing.md};
+    max-width: none;
+  }
 `;
 
 export const SearchInput = styled.input`
@@ -50,7 +55,7 @@ export const SearchInput = styled.input`
   border: none;
   width: 100%;
   color: ${(props) => props.theme.text};
-  font-size: 0.98rem;
+  font-size: ${(props) => props.theme["font-sizes"].lg};
   outline: none;
 
   &::placeholder {
@@ -59,25 +64,24 @@ export const SearchInput = styled.input`
 `;
 
 export const CreateButton = styled.button`
-  background-color: ${props => props.theme.primary};
+  background-color: ${(props) => props.theme.primary};
   border: none;
-  border-radius: 10px;
+  border-radius: ${(props) => props.theme.radii.md};
   color: white;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  font-size: 0.95rem;
+  gap: ${(props) => props.theme.spacing.xs};
+  font-size: ${(props) => props.theme["font-sizes"].md};
   font-weight: 700;
-  min-height: 48px;
-  padding: 0 16px;
+  min-height: ${(props) => props.theme.sizes["control-min-height"]};
+  padding: 0 ${(props) => props.theme.spacing.md};
   white-space: nowrap;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
     filter 0.2s ease;
-
 
   &:active {
     transform: translateY(0);
@@ -86,10 +90,10 @@ export const CreateButton = styled.button`
 
 export const ContainerAreas = styled.section`
   display: grid;
-  gap: 22px;
+  gap: ${(props) => props.theme.spacing.lg};
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
-  @media (max-width: 1100px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.wide}px) {
     grid-template-columns: 1fr;
   }
 `;

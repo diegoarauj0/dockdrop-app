@@ -1,4 +1,4 @@
-import { Box, Grid, GripVertical, Info, Trash } from "lucide-react";
+import { Box, GripVertical, Info, Trash } from "lucide-react";
 import * as S from "./containerCard.style";
 
 type ContainerCardProps = {
@@ -12,7 +12,7 @@ type ContainerCardProps = {
   status: "active" | "inactive";
 };
 
-export function ContainerCard({ container, status }: ContainerCardProps) {
+export function ContainerCard({ container, status }: ContainerCardProps): React.ReactNode {
   return (
     <S.Card $status={status}>
       <S.Grip aria-hidden="true">

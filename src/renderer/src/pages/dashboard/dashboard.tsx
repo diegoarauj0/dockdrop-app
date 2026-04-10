@@ -4,7 +4,7 @@ import { StatsGridComponent } from "../../components/statsGrid/statsGrid";
 import { Plus, Search } from "lucide-react";
 import * as S from "./dashboard.style";
 
-export function DashboardPage() {
+export function DashboardPage(): React.ReactNode {
   return (
     <S.Dashboard>
       <S.TopBar>

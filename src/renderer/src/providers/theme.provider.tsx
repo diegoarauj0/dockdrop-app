@@ -3,7 +3,7 @@ import { darkTheme, lightTheme, ThemeType, STORAGE_KEY } from "../theme";
 import { useState, useEffect, ReactNode } from "react";
 import { ThemeContext } from "./useTheme";
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
+export function ThemeProvider({ children }: { children: ReactNode }): React.ReactNode {
   const stored = localStorage.getItem(STORAGE_KEY);
 
   const [theme, setTheme] = useState<ThemeType>(stored === "light" ? "light" : "dark");

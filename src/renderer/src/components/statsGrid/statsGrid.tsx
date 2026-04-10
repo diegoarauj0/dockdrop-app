@@ -1,7 +1,7 @@
 import { Activity, Box, Pause } from "lucide-react";
 import * as S from "./statsGrid.style";
 
-export function StatsGridComponent() {
+export function StatsGridComponent(): React.ReactNode {
   const stats = [
     {
       icon: <Box size={18} />,

@@ -1,5 +1,5 @@
-import * as S from "./settings.style"
+import * as S from "./settings.style";
 
-export function SettingsPage() {
+export function SettingsPage(): React.ReactNode {
   return <S.Settings></S.Settings>;
 }

@@ -1,9 +1,9 @@
-import { ThemeProvider } from "./providers/ThemeProvider";
+import { ThemeProvider } from "./providers/theme.provider";
 import { RouterProvider } from "react-router";
-import GlobalStyle from "./globalStyle";
+import GlobalStyle from "./global.style";
 import { router } from "./router";
 
-export function App() {
+export function App(): React.ReactNode {
   return (
     <ThemeProvider>
       <GlobalStyle />

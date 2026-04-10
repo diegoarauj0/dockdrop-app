@@ -25,7 +25,7 @@ const activeContainers = [
   },
 ];
 
-export function ActiveContainersArea() {
+export function ActiveContainersArea(): React.ReactNode {
   return (
     <S.Section>
       <S.Header>

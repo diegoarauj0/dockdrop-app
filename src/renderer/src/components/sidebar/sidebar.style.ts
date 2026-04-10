@@ -1,45 +1,76 @@
 import styled from "styled-components";
 
-export const SideBar = styled.main`
+type SidebarStateProps = {
+  $isCollapsed: boolean;
+};
+
+export const SideBar = styled.main<SidebarStateProps>`
   background-color: ${(props) => props.theme["bg"]};
   flex-direction: column;
-  border-radius: 12px;
-  padding: 14px 10px;
+  border-radius: ${(props) => props.theme.radii.md};
+  padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.xs};
   display: flex;
   height: 100%;
   width: 100%;
 `;
 
-export const Header = styled.header`
-  padding: 4px 4px 18px;
+export const Header = styled.header<SidebarStateProps>`
+  padding: ${(props) => props.theme.spacing.xxs} ${(props) => props.theme.spacing.xxs} ${(props) => props.theme.spacing.md};
   align-items: center;
   display: flex;
-  gap: 10px;
+  flex-wrap: ${(props) => (props.$isCollapsed ? "wrap" : "nowrap")};
+  gap: ${(props) => props.theme.spacing.xs};
+  justify-content: ${(props) => (props.$isCollapsed ? "center" : "space-between")};
+`;
+
+export const ToggleButton = styled.button<SidebarStateProps>`
+  background: transparent;
+  border: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.border};
+  color: ${(props) => props.theme["text-muted"]};
+  border-radius: ${(props) => props.theme.radii.sm};
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  margin-left: auto;
+  margin-top: ${(props) => (props.$isCollapsed ? props.theme.spacing.sm : "0px")};
+  height: ${(props) => props.theme.sizes.iconMd};
+  width: ${(props) => (props.$isCollapsed ? "100%" : props.theme.sizes.iconMd)};
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+
+  &:hover {
+    background-color: ${(props) => props.theme["bg-light"]};
+    color: ${(props) => props.theme.text};
+  }
 `;
 
 export const BrandIcon = styled.div`
   background-color: ${(props) => props.theme.primary};
-  border: 1px solid ${(props) => props.theme.border};
+  border: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.border};
   color: ${(props) => props.theme["bg-dark"]};
   justify-content: center;
   align-items: center;
-  border-radius: 14px;
+  border-radius: ${(props) => props.theme.radii.lg};
   display: flex;
-  padding: 6px;
-  height: 50px;
-  width: 50px;
+  padding: ${(props) => props.theme.spacing.xs};
+  height: ${(props) => props.theme.sizes.iconLg};
+  width: ${(props) => props.theme.sizes.iconLg};
 
   svg {
     height: 100%;
     color: white;
     width: 100%;
-    box-shadow: 3px 3px 15px ${(props) => props.theme.primary};
+    box-shadow: ${(props) => props.theme.spacing.xxs} ${(props) => props.theme.spacing.xxs}
+      ${(props) => props.theme.spacing.md}${(props) => props.theme.primary};
   }
 `;
 
 export const BrandName = styled.strong`
   color: ${(props) => props.theme.text};
-  font-size: 1.6rem;
+  font-size: ${(props) => props.theme["font-sizes"].xl};
   font-weight: 700;
   letter-spacing: -0.02em;
 `;
@@ -51,22 +82,26 @@ export const Nav = styled.nav`
 export const NavList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: ${(props) => props.theme.spacing.xs};
   list-style: none;
 `;
 
-export const NavItem = styled.div<{ $isActive: boolean }>`
+export const NavItem = styled.div<{
+  $isActive: boolean;
+  $isCollapsed: boolean;
+}>`
   a {
     align-items: center;
     background-color: ${(props) => (props.$isActive ? props.theme["bg-light"] : "transparent")};
-    border-radius: 8px;
+    border-radius: ${(props) => props.theme.radii.sm};
     color: ${(props) => (props.$isActive ? props.theme.primary : props.theme["text-muted"])};
     display: flex;
-    font-size: 1.4rem;
+    font-size: ${(props) => props.theme["font-sizes"].md};
     font-weight: 600;
-    gap: 10px;
-    padding: 10px 12px;
-    font-size: 18px;
+    gap: ${(props) => (props.$isCollapsed ? "0" : props.theme.spacing.xs)};
+    justify-content: ${(props) => (props.$isCollapsed ? "center" : "flex-start")};
+    padding: ${(props) =>
+      props.$isCollapsed ? `${props.theme.spacing.xs}` : `${props.theme.spacing.xs} ${props.theme.spacing.sm}`};
     text-decoration: none;
     transition:
       background-color 0.2s ease,
@@ -81,7 +116,7 @@ export const NavItem = styled.div<{ $isActive: boolean }>`
 
   svg {
     flex-shrink: 0;
-    height: 22px;
-    width: 22px;
+    height: ${(props) => props.theme.sizes.iconSm};
+    width: ${(props) => props.theme.sizes.iconSm};
   }
 `;
