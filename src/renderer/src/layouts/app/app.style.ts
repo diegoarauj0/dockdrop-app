@@ -10,6 +10,11 @@ export const AppLayout = styled.main`
   height: 100vh;
   width: 100vw;
   overflow-y: auto;
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    overflow-y: hidden;
+    flex-direction: column-reverse;
+  }
 `;
 
 export const SidebarContent = styled.div<SidebarStateProps>`
@@ -21,6 +26,14 @@ export const SidebarContent = styled.div<SidebarStateProps>`
   padding: ${(props) => props.theme.spacing.xs};
   transition: width 0.2s ease;
   width: ${(props) => (props.$isCollapsed ? props.theme.sizes["sidebar-collapsed-width"] : props.theme.sizes["sidebar-width"])};
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    min-height: 0px;
+    width: 100%;
+    padding: ${props => props.theme.spacing.xxs};
+    height: 100px;
+    position: relative;
+  }
 `;
 
 export const MainContent = styled.div<SidebarStateProps>`
@@ -29,4 +42,11 @@ export const MainContent = styled.div<SidebarStateProps>`
     `calc(100vw - ${props.$isCollapsed ? props.theme.sizes["sidebar-collapsed-width"] : props.theme.sizes["sidebar-width"]})`};
   padding: ${(props) => props.theme.spacing.xs} ${(props) => props.theme.spacing.md};
   height: 100vh;
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    width: 100%;
+    padding: ${props => props.theme.spacing.xxs};
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
 `;

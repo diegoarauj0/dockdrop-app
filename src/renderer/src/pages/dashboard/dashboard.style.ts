@@ -19,7 +19,11 @@ export const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
+  @media screen and (max-width: ${props => props.theme.breakpoints.tablet}px){
+    position: relative;
+  }
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
     flex-direction: column;
     align-items: stretch;
     padding: ${(props) => props.theme.spacing.md};
@@ -43,9 +47,8 @@ export const SearchWrapper = styled.label`
     box-shadow 0.2s ease,
     color 0.2s ease;
 
-  
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
-    margin-bottom: ${props => props.theme.spacing.md};
+    margin-bottom: ${(props) => props.theme.spacing.md};
     max-width: none;
   }
 `;

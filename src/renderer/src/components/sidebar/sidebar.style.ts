@@ -21,6 +21,10 @@ export const Header = styled.header<SidebarStateProps>`
   flex-wrap: ${(props) => (props.$isCollapsed ? "wrap" : "nowrap")};
   gap: ${(props) => props.theme.spacing.xs};
   justify-content: ${(props) => (props.$isCollapsed ? "center" : "space-between")};
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    display: none;
+  }
 `;
 
 export const ToggleButton = styled.button<SidebarStateProps>`
@@ -76,14 +80,24 @@ export const BrandName = styled.strong`
 `;
 
 export const Nav = styled.nav`
-  flex: 1;
+  display: flex;
+  justify-content: center;
 `;
 
 export const NavList = styled.ul`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: ${(props) => props.theme.spacing.xs};
   list-style: none;
+  flex-direction: column;
+  width: 100%;
+
+  @media screen and (max-width: ${props => props.theme.breakpoints.tablet}px){
+    width: auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
 `;
 
 export const NavItem = styled.div<{
@@ -103,10 +117,15 @@ export const NavItem = styled.div<{
     padding: ${(props) =>
       props.$isCollapsed ? `${props.theme.spacing.xs}` : `${props.theme.spacing.xs} ${props.theme.spacing.sm}`};
     text-decoration: none;
+    width: 100%;
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
       color 0.2s ease;
+  }
+
+  span {
+    display: ${props => props.$isCollapsed?"none":"inliner"};
   }
 
   a:hover {
@@ -118,5 +137,26 @@ export const NavItem = styled.div<{
     flex-shrink: 0;
     height: ${(props) => props.theme.sizes.iconSm};
     width: ${(props) => props.theme.sizes.iconSm};
+  }
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    a {
+      border-radius: 999px;
+      position: relative;
+      width: 60px;
+      height: 60px;
+      margin: -${props => props.theme.spacing.sm} ${props => props.theme.spacing.sm} 0px ${props => props.theme.spacing.sm};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    span {
+      position: absolute;
+      display: inline;
+      left: 50%;
+      top: 110%;
+      transform: translate(-50%, -50%);
+    }
   }
 `;

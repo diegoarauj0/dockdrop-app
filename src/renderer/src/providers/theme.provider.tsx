@@ -19,7 +19,7 @@ export function ThemeProvider({ children }: { children: ReactNode }): React.Reac
   const currentTheme = theme === "dark" ? darkTheme : lightTheme;
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, currentTheme }}>
       <StyledThemeProvider theme={currentTheme}>{children}</StyledThemeProvider>
     </ThemeContext.Provider>
   );

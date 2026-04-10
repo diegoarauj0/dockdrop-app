@@ -1,6 +1,6 @@
 import { Boxes, ChevronLeft, ChevronRight, LayoutDashboard, Settings } from "lucide-react";
-import { ReactElement } from "react";
 import { Link, useLocation } from "react-router";
+import { ReactElement } from "react";
 import * as S from "./sidebar.style";
 
 type SideBarComponentProps = {
@@ -35,7 +35,7 @@ export function SideBarComponent({ isCollapsed, onToggleCollapse }: SideBarCompo
               <S.NavItem $isActive={pathname === link} $isCollapsed={isCollapsed}>
                 <Link to={link} replace>
                   {icon}
-                  {!isCollapsed && <span>{name}</span>}
+                  <span>{name}</span>
                 </Link>
               </S.NavItem>
             </li>

@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { DashboardPage } from "./pages/dashboard/dashboard";
+import { DockerErrorPage } from "./pages/dockerError/dockerError";
 import { AppLayout } from "./layouts/app/app";
 
 export const router = createBrowserRouter([
@@ -15,6 +16,14 @@ export const router = createBrowserRouter([
         path: "/settings",
       },
     ],
+  },
+  {
+    path: "/docker-error",
+    element: <DockerErrorPage />,
+  },
+  {
+    path: "/",
+    element: <Navigate to={"/dashboard"} replace />,
   },
   {
     path: "*",

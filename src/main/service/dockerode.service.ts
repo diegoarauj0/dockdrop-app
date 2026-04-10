@@ -1,18 +1,27 @@
+import { is } from "@electron-toolkit/utils";
 import Docker from "dockerode";
 
 export class DockerodeService {
-  private docker = new Docker();
+  private readonly docker = new Docker();
+  private readonly isDev = is.dev;
 
-  async ping(): Promise<boolean> {
+  public async ping(): Promise<{ success: boolean; error?: string }> {
+    console.log(`[MAIN] DockerodeService.ping`);
     try {
       await this.docker.ping();
-      return true;
-    } catch {
-      return false;
+      return { success: true };
+    } catch (error) {
+      if (this.isDev) {
+        console.warn("[MAIN] DockerodeService.ping error");
+        console.error(error);
+      }
+      
+      return { success: false, error: String(error) };
     }
   }
 
-  async listContainers(all = true): Promise<Docker.ContainerInfo[]> {
+  public async listContainers(all = true): Promise<Docker.ContainerInfo[]> {
+    console.log(`[MAIN] DockerodeService.listContainers ${JSON.stringify({ all })}`);
     return this.docker.listContainers({ all });
   }
 }
