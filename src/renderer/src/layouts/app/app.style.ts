@@ -7,12 +7,10 @@ type SidebarStateProps = {
 export const AppLayout = styled.main`
   background-color: ${(props) => props.theme["bg-dark"]};
   display: flex;
-  height: 100vh;
   width: 100vw;
-  overflow-y: auto;
+  height: 100vh;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
-    overflow-y: hidden;
     flex-direction: column-reverse;
   }
 `;
@@ -30,7 +28,7 @@ export const SidebarContent = styled.div<SidebarStateProps>`
   @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
     min-height: 0px;
     width: 100%;
-    padding: ${props => props.theme.spacing.xxs};
+    padding: ${(props) => props.theme.spacing.xxs};
     height: 100px;
     position: relative;
   }
@@ -41,11 +39,12 @@ export const MainContent = styled.div<SidebarStateProps>`
   width: ${(props) =>
     `calc(100vw - ${props.$isCollapsed ? props.theme.sizes["sidebar-collapsed-width"] : props.theme.sizes["sidebar-width"]})`};
   padding: ${(props) => props.theme.spacing.xs} ${(props) => props.theme.spacing.md};
+  overflow-y: scroll;
   height: 100vh;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
     width: 100%;
-    padding: ${props => props.theme.spacing.xxs};
+    padding: ${(props) => props.theme.spacing.xxs};
     height: calc(100vh - 100px);
     overflow-y: auto;
   }

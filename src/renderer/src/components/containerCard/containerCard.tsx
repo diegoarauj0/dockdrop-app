@@ -1,20 +1,16 @@
+import { formatBytes, getCPUPercent, getMemoryUsage } from "../../helpers/metric.helper";
 import { Box, GripVertical, Info, Trash } from "lucide-react";
+import { useContainerStats } from "../../providers/useContainerStats";
 import * as S from "./containerCard.style";
+import { ContainerInfo } from "dockerode";
 
-type ContainerCardProps = {
-  container: {
-    name: string;
-    image: string;
-    cpu: string;
-    ram: string;
-    uptime: string;
-  };
-  status: "active" | "inactive";
-};
+export function ContainerCard({ Names, Image, State, Id, Status }: ContainerInfo): React.ReactNode {
+  const { containerStats } = useContainerStats();
 
-export function ContainerCard({ container, status }: ContainerCardProps): React.ReactNode {
+  const stat = containerStats.find(({ id }) => id === Id);
+
   return (
-    <S.Card $status={status}>
+    <S.Card $state={State}>
       <S.Grip aria-hidden="true">
         <GripVertical />
       </S.Grip>
@@ -22,39 +18,56 @@ export function ContainerCard({ container, status }: ContainerCardProps): React.
       <S.Content>
         <S.Header>
           <S.TitleGroup>
-            <S.IconWrapper $status={status}>
+            <S.IconWrapper $state={State}>
               <Box size={16} />
             </S.IconWrapper>
 
             <S.TitleText>
-              <S.Name>{container.name}</S.Name>
-              <S.Image>{container.image}</S.Image>
+              <S.Name>{Names[0].replace("/", "")}</S.Name>
+              <S.Image>{Image}</S.Image>
             </S.TitleText>
           </S.TitleGroup>
 
+          <S.StatusContainer>
+            <S.StatusDot $state={State} />
+            <S.StatusText $state={State}>{State}</S.StatusText>
+          </S.StatusContainer>
+
           <S.Actions>
-            <S.ActionLink $tone="neutral" type="button">
+            <S.ActionLink $style="neutral" type="button">
               About <Info />
             </S.ActionLink>
-            <S.ActionLink $tone="danger" type="button">
+
+            <S.ActionLink $style="danger" type="button">
               Delete <Trash />
             </S.ActionLink>
-            <S.StatusDot $status={status} />
           </S.Actions>
         </S.Header>
 
         <S.Metrics>
           <S.Metric>
             <S.MetricLabel>CPU</S.MetricLabel>
-            <S.MetricValue>{container.cpu}</S.MetricValue>
+            <S.MetricValue>{stat ? getCPUPercent(stat).toFixed(2) + "%" : "-"}</S.MetricValue>
           </S.Metric>
+
           <S.Metric>
             <S.MetricLabel>RAM</S.MetricLabel>
-            <S.MetricValue>{container.ram}</S.MetricValue>
+            <S.MetricValue>
+              {stat ? (
+                <>
+                  {formatBytes(getMemoryUsage(stat).used)} / {formatBytes(getMemoryUsage(stat).limit)}
+                  <br />
+                  {getMemoryUsage(stat).percent.toFixed(2) + "%"}
+                </>
+              ) : (
+                "-"
+              )}
+            </S.MetricValue>
           </S.Metric>
+
           <S.Metric>
             <S.MetricLabel>Uptime</S.MetricLabel>
-            <S.MetricValue>{container.uptime}</S.MetricValue>
+            <S.MetricValue>{Status}</S.MetricValue>
           </S.Metric>
         </S.Metrics>
       </S.Content>

@@ -1,14 +1,14 @@
-import { DockerodeService } from "../service/dockerode.service";
+import { DockerService } from "../service/docker.service";
 import { ipcMain } from "electron";
 
-const dockerodeService = new DockerodeService();
+const dockerService = new DockerService();
 
 export function registerDockerodeIpc(): void {
   ipcMain.handle("docker:ping", async () => {
-    return dockerodeService.ping();
+    return dockerService.ping();
   });
 
   ipcMain.handle("docker:list_containers", async (_, all: boolean = true) => {
-    return dockerodeService.listContainers(all);
+    return dockerService.listContainers(all);
   });
 }

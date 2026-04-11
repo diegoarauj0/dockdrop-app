@@ -3,16 +3,19 @@ import GlobalStyle from "./global.style";
 import { router } from "./router";
 import { RouterProvider } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ContainerStatsProvider } from "./providers/containerStats.provider";
 
 const queryClient = new QueryClient();
 
 function App(): React.ReactNode {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <GlobalStyle />
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <ContainerStatsProvider>
+        <ThemeProvider>
+          <GlobalStyle />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </ContainerStatsProvider>
     </QueryClientProvider>
   );
 }

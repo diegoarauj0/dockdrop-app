@@ -1,6 +1,7 @@
+import { registerDockerStatsIpc } from "./ipc/dockerStatsManager.ipc";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
-import { app, shell, BrowserWindow, ipcMain } from "electron";
-import { registerDockerodeIpc } from "./ipc/dockerode.ipc";
+import { registerDockerodeIpc } from "./ipc/docker.ipc";
+import { app, shell, BrowserWindow } from "electron";
 import icon from "../../resources/icon.png?asset";
 import { join } from "path";
 
@@ -37,9 +38,9 @@ function createWindow(): BrowserWindow {
   return mainWindow;
 }
 
-function registerIpcHandlers(): void {
-  ipcMain.on("ping", () => console.log("pong"));
+function registerIpcHandlers(win: BrowserWindow): void {
   registerDockerodeIpc();
+  registerDockerStatsIpc(win);
 }
 
 function setupApp(): void {
@@ -52,8 +53,8 @@ function setupApp(): void {
 
 app.whenReady().then(() => {
   setupApp();
-  registerIpcHandlers();
-  createWindow();
+  const browserWindow = createWindow();
+  registerIpcHandlers(browserWindow);
 });
 
 app.on("window-all-closed", () => {

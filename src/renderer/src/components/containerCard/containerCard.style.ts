@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const Card = styled.article<{ $status: "active" | "inactive" }>`
+interface IStateProps {
+  $state: string;
+}
+
+export const Card = styled.article<IStateProps>`
   background: linear-gradient(${(props) => `${props.theme["bg-light"]}, ${props.theme.bg}`});
   border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["highlight"]};
   border-radius: ${(props) => props.theme.radii.lg};
@@ -34,26 +38,28 @@ export const Content = styled.div`
 `;
 
 export const Header = styled.div`
-  align-items: flex-start;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   gap: ${(props) => props.theme.spacing.sm};
 `;
 
 export const TitleGroup = styled.div`
   align-items: center;
+  grid-row-start: 1;
+  grid-row-end: 3;
   display: flex;
   gap: ${(props) => props.theme.spacing.xs};
   min-width: 0;
 `;
 
-export const IconWrapper = styled.div<{ $status: "active" | "inactive" }>`
+export const IconWrapper = styled.div<IStateProps>`
   align-items: center;
   background-color: ${(props) => props.theme["bg-dark"]};
   border: ${(props) => props.theme["border-widths"].thin} solid
-    ${(props) => (props.$status === "active" ? props.theme.success : props.theme.danger)};
+    ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
   border-radius: ${(props) => props.theme.radii.md};
-  color: ${(props) => (props.$status === "active" ? props.theme.success : props.theme.danger)};
+  color: ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
   display: flex;
   flex-shrink: 0;
   height: ${(props) => props.theme.sizes.iconMd};
@@ -89,14 +95,15 @@ export const Image = styled.span`
 
 export const Actions = styled.div`
   display: flex;
+  justify-content: flex-end;
   gap: ${(props) => props.theme.spacing.xs};
 `;
 
-export const ActionLink = styled.button<{ $tone: "neutral" | "danger" }>`
+export const ActionLink = styled.button<{ $style: string }>`
   transition: 0.3s;
   background: transparent;
   border: none;
-  color: ${(props) => (props.$tone === "danger" ? props.theme.danger : props.theme["text-muted"])};
+  color: ${(props) => (props.$style === "danger" ? props.theme.danger : props.theme["text-muted"])};
   cursor: pointer;
   font-size: ${(props) => props.theme["font-sizes"].xs};
   font-weight: 700;
@@ -119,10 +126,21 @@ export const ActionLink = styled.button<{ $tone: "neutral" | "danger" }>`
   }
 `;
 
-export const StatusDot = styled.span<{ $status: "active" | "inactive" }>`
-  background-color: ${(props) => (props.$status === "active" ? props.theme.success : props.theme.danger)};
+export const StatusText = styled.p<IStateProps>`
+  color: ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
+`;
+
+export const StatusContainer = styled.div`
+  flex-direction: row-reverse;
+  align-items: center;
+  display: flex;
+`;
+
+export const StatusDot = styled.span<IStateProps>`
+  background-color: ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
   border-radius: ${(props) => props.theme.radii.pill};
   display: block;
+  margin-left: ${(props) => props.theme.spacing.sm};
   height: ${(props) => props.theme.sizes.dot};
   width: ${(props) => props.theme.sizes.dot};
 `;

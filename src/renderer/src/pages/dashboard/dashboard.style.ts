@@ -2,14 +2,11 @@ import styled from "styled-components";
 
 export const Dashboard = styled.div`
   display: flex;
-  height: 100%;
   flex-direction: column;
   gap: ${(props) => props.theme.spacing.lg};
 `;
 
 export const TopBar = styled.div`
-  position: sticky;
-  top: 0%;
   width: 100%;
   border: ${(props) => props.theme["border-widths"].strong} solid ${(props) => props.theme["bg-dark"]};
   background-color: ${(props) => props.theme.bg};
@@ -18,15 +15,17 @@ export const TopBar = styled.div`
   padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.lg};
   display: flex;
   justify-content: space-between;
-
-  @media screen and (max-width: ${props => props.theme.breakpoints.tablet}px){
-    position: relative;
-  }
+  position: sticky;
+  top: 0%;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
     flex-direction: column;
     align-items: stretch;
     padding: ${(props) => props.theme.spacing.md};
+  }
+
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
+    position: relative;
   }
 `;
 
