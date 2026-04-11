@@ -1,17 +1,21 @@
 import { ActiveContainersArea } from "../../components/activeContainersArea/activeContainersArea";
 import { InactiveContainersArea } from "../../components/inactiveContainersArea/inactiveContainersArea";
 import { StatsGridComponent } from "../../components/statsGrid/statsGrid";
-import { Plus, Search } from "lucide-react";
+import { SearchContainers } from "../../components/searchContainers/searchContainers";
+import { Plus } from "lucide-react";
+import { useContainers } from "../../hooks/reactQuery/useContainers";
+import { useState } from "react";
 import * as S from "./dashboard.style";
+import { ContainerInfo } from "dockerode";
 
 export function DashboardPage(): React.ReactNode {
+  const [filteredContainers, setFilteredContainers] = useState<ContainerInfo[] | null>(null);
+  const { data } = useContainers(true);
+
   return (
     <S.Dashboard>
       <S.TopBar>
-        <S.SearchWrapper>
-          <Search size={18} />
-          <S.SearchInput aria-label="Search containers" placeholder="Search containers..." type="text" />
-        </S.SearchWrapper>
+        <SearchContainers containers={data?.containers || []} setResult={setFilteredContainers} />
 
         <S.CreateButton type="button">
           <Plus size={16} strokeWidth={2.5} />
@@ -22,8 +26,20 @@ export function DashboardPage(): React.ReactNode {
       <StatsGridComponent />
 
       <S.ContainerAreas>
-        <ActiveContainersArea />
-        <InactiveContainersArea />
+        <ActiveContainersArea
+          containers={
+            filteredContainers === null
+              ? data?.activeContainers || []
+              : filteredContainers.filter(({ State }) => State === "running")
+          }
+        />
+        <InactiveContainersArea
+          containers={
+            filteredContainers === null
+              ? data?.inactiveContainers || []
+              : filteredContainers.filter(({ State }) => State === "exited")
+          }
+        />
       </S.ContainerAreas>
     </S.Dashboard>
   );

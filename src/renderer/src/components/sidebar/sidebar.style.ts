@@ -93,7 +93,7 @@ export const NavList = styled.ul`
   flex-direction: column;
   width: 100%;
 
-  @media screen and (max-width: ${props => props.theme.breakpoints.tablet}px){
+  @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
     width: auto;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -125,7 +125,7 @@ export const NavItem = styled.div<{
   }
 
   span {
-    display: ${props => props.$isCollapsed?"none":"inliner"};
+    display: ${(props) => (props.$isCollapsed ? "none" : "inliner")};
   }
 
   a:hover {
@@ -145,7 +145,7 @@ export const NavItem = styled.div<{
       position: relative;
       width: 60px;
       height: 60px;
-      margin: -${props => props.theme.spacing.sm} ${props => props.theme.spacing.sm} 0px ${props => props.theme.spacing.sm};
+      margin: -${(props) => props.theme.spacing.sm} ${(props) => props.theme.spacing.sm} 0px ${(props) => props.theme.spacing.sm};
       display: flex;
       justify-content: center;
       align-items: center;

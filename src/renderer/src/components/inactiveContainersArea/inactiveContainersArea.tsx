@@ -1,19 +1,21 @@
-import { useContainers } from "../../hooks/reactQuery/useContainers";
 import { ContainerCard } from "../containerCard/containerCard";
 import * as S from "./inactiveContainersArea.style";
+import { ContainerInfo } from "dockerode";
 
-export function InactiveContainersArea(): React.ReactNode {
-  const { data } = useContainers(true);
+interface InactiveContainersAreaProps {
+  containers: ContainerInfo[];
+}
 
+export function InactiveContainersArea({ containers }: InactiveContainersAreaProps): React.ReactNode {
   return (
     <S.Section>
       <S.Header>
         <S.Title>Inactive Containers</S.Title>
-        <S.Count>{data?.inactiveContainers.length}</S.Count>
+        <S.Count>{containers.length}</S.Count>
       </S.Header>
 
       <S.Cards>
-        {data?.inactiveContainers.map((container) => (
+        {containers.map((container) => (
           <ContainerCard {...container} key={container.Id} />
         ))}
       </S.Cards>
