@@ -11,4 +11,8 @@ export function registerDockerodeIpc(): void {
   ipcMain.handle("docker:list_containers", async (_, all: boolean = true) => {
     return dockerService.listContainers(all);
   });
+
+  ipcMain.handle("docker:delete_container", async (_, containerId: string) => {
+    return dockerService.deleteContainer(containerId);
+  });
 }

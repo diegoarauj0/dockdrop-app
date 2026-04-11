@@ -62,8 +62,10 @@ export const darkTheme = {
   primary: "#3b82f6",
   secondary: "#b8c76a",
   danger: "#d16a5f",
+  "danger-hover": "#e87c6f",
   warning: "#c9a84f",
   success: "#4fbf8f",
+  "success-hover": "#5fd19f",
   info: "#5f8fd1",
 };
 
@@ -80,8 +82,10 @@ export const lightTheme = {
   primary: "#3b82f6",
   secondary: "#6b7a2f",
   danger: "#a94a42",
+  "danger-hover": "#b95a52",
   warning: "#9a7f2f",
   success: "#2f8a66",
+  "success-hover": "#3f9a76",
   info: "#426aa9",
 };
 

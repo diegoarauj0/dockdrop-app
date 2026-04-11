@@ -10,4 +10,9 @@ export class DockerService {
     console.log(`[RENDERER] DockerService.listContainers ${JSON.stringify({ all })}`);
     return window.electron.ipcRenderer.invoke("docker:list_containers", all);
   }
+
+  public deleteContainer(containerId: string): Promise<{ success: boolean; error?: string }> {
+    console.log(`[RENDERER] DockerService.deleteContainer ${containerId}`);
+    return window.electron.ipcRenderer.invoke("docker:delete_container", containerId);
+  }
 }
