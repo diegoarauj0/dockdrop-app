@@ -6,8 +6,18 @@ import { Box, GripVertical, Info, Trash } from "lucide-react";
 import * as S from "./containerCard.style";
 import { ContainerInfo } from "dockerode";
 import { useState } from "react";
+import { CSSProperties } from "styled-components";
 
-export function ContainerCard({ Names, Image, State, Id, Status }: ContainerInfo): React.ReactNode {
+interface IContainerCardProps extends ContainerInfo {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  attributes?: any;
+  style?: CSSProperties;
+  ref?: (element: HTMLElement) => void;
+}
+
+export function ContainerCardComponent(props: IContainerCardProps): React.ReactNode {
+  const { Names, Image, State, Id, Status, ref, style, attributes } = props;
+
   const { containerStats } = useContainerStats();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const { mutate } = useDeleteContainer();
@@ -21,8 +31,8 @@ export function ContainerCard({ Names, Image, State, Id, Status }: ContainerInfo
 
   return (
     <>
-      <S.Card $state={State}>
-        <S.Grip aria-hidden="true">
+      <S.Card ref={ref} style={style} $state={State}>
+        <S.Grip aria-hidden="true" {...attributes}>
           <GripVertical />
         </S.Grip>
 

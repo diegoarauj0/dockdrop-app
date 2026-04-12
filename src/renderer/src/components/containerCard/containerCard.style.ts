@@ -4,7 +4,7 @@ interface IStateProps {
   $state: string;
 }
 
-export const Card = styled.article<IStateProps>`
+export const Card = styled.article<React.ComponentProps<"article"> & IStateProps>`
   background: linear-gradient(${(props) => `${props.theme["bg-light"]}, ${props.theme.bg}`});
   border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["highlight"]};
   border-radius: ${(props) => props.theme.radii.lg};

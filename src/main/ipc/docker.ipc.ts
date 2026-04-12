@@ -15,4 +15,12 @@ export function registerDockerodeIpc(): void {
   ipcMain.handle("docker:delete_container", async (_, containerId: string) => {
     return dockerService.deleteContainer(containerId);
   });
+
+  ipcMain.handle("docker:start_container", async (_, containerId: string) => {
+    return dockerService.startContainer(containerId);
+  });
+
+  ipcMain.handle("docker:stop_container", async (_, containerId: string) => {
+    return dockerService.stopContainer(containerId);
+  });
 }

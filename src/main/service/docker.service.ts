@@ -39,4 +39,34 @@ export class DockerService {
       return { success: false, error: String(error) };
     }
   }
+
+  public async startContainer(containerId: string): Promise<{ success: boolean; error?: string }> {
+    console.log(`[MAIN] DockerService.startContainer ${containerId}`);
+    try {
+      const container = this.docker.getContainer(containerId);
+      await container.start();
+      return { success: true };
+    } catch (error) {
+      if (this.isDev) {
+        console.warn("[MAIN] DockerService.startContainer error");
+        console.error(error);
+      }
+      return { success: false, error: String(error) };
+    }
+  }
+
+  public async stopContainer(containerId: string): Promise<{ success: boolean; error?: string }> {
+    console.log(`[MAIN] DockerService.stopContainer ${containerId}`);
+    try {
+      const container = this.docker.getContainer(containerId);
+      await container.stop();
+      return { success: true };
+    } catch (error) {
+      if (this.isDev) {
+        console.warn("[MAIN] DockerService.stopContainer error");
+        console.error(error);
+      }
+      return { success: false, error: String(error) };
+    }
+  }
 }

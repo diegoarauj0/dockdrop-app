@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
-export const Section = styled.section`
+export const Section = styled.section<{ $active: boolean }>`
   background-color: ${(props) => props.theme["bg-dark"]};
-  border: ${(props) => props.theme["border-widths"].regular} dashed ${(props) => props.theme.danger};
+  border: ${(props) => props.theme["border-widths"].regular} ${props => props.$active?"solid":"dashed"} ${(props) => props.theme.danger};
   border-radius: ${(props) => props.theme.radii.lg};
+  box-shadow: 0px 0px 10px ${props => props.$active?props.theme.warning:"transparent"};
   display: flex;
   flex-direction: column;
   gap: ${(props) => props.theme.spacing.md};
@@ -40,7 +41,7 @@ export const Count = styled.span`
   padding: 0 ${(props) => props.theme.spacing.xs};
 `;
 
-export const Cards = styled.div`
+export const Cards = styled.div<{ style?: React.CSSProperties }>`
   display: flex;
   flex-direction: column;
   gap: ${(props) => props.theme.spacing.md};

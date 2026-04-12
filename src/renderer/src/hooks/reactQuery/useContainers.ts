@@ -14,7 +14,7 @@ export function useContainers(all: boolean): UseQueryResult<IUseContainers> {
   return useQuery({
     queryKey: ["docker-containers", all],
     queryFn: () => dockerService.listContainers(all),
-    refetchInterval: 5000,
+    refetchInterval: 3000,
 
     refetchIntervalInBackground: false,
 
