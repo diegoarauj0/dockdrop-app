@@ -93,39 +93,6 @@ export const Image = styled.span`
   white-space: nowrap;
 `;
 
-export const Actions = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: ${(props) => props.theme.spacing.xs};
-`;
-
-export const ActionLink = styled.button<{ $style: string }>`
-  transition: 0.3s;
-  background: transparent;
-  border: none;
-  color: ${(props) => (props.$style === "danger" ? props.theme.danger : props.theme["text-muted"])};
-  cursor: pointer;
-  font-size: ${(props) => props.theme["font-sizes"].xs};
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) => props.theme.bg};
-  text-transform: uppercase;
-  padding: ${(props) => props.theme.spacing.xxs} ${(props) => props.theme.spacing.sm};
-  border-radius: ${(props) => props.theme.radii.md};
-
-  &:hover {
-    transition: 0.1s;
-    transform: translateY(-2);
-  }
-
-  svg {
-    margin-left: ${(props) => props.theme.spacing.xxs};
-  }
-`;
-
 export const StatusText = styled.p<IStateProps>`
   color: ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
 `;

@@ -19,6 +19,8 @@ export function useStartContainer(): UseStartContainerMutationResult {
     mutationFn: (containerId: string) => dockerService.startContainer(containerId),
 
     onMutate: async (containerId: string) => {
+      await queryClient.cancelQueries({ queryKey });
+
       const previewContainers = queryClient.getQueryData<ContainerInfo[]>(queryKey);
 
       queryClient.setQueryData<ContainerInfo[]>(queryKey, (containers) => {
@@ -39,16 +41,19 @@ export function useStartContainer(): UseStartContainerMutationResult {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey, exact: true });
     },
 
     onError: (err, _, context) => {
       console.error(err);
 
       const previewContainers = context?.previewContainers;
-      if (!previewContainers) return;
 
-      queryClient.setQueryData(queryKey, previewContainers);
+      if (!previewContainers) {
+        return queryClient.invalidateQueries({ queryKey });
+      }
+      
+      queryClient.setQueryData(queryKey, context.previewContainers);
     },
   });
 }

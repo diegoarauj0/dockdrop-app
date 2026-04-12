@@ -19,36 +19,37 @@ export function useStopContainer(): UseStopContainerMutationResult {
     mutationFn: (containerId: string) => dockerService.stopContainer(containerId),
 
     onMutate: async (containerId: string) => {
+      await queryClient.cancelQueries({ queryKey });
+
       const previewContainers = queryClient.getQueryData<ContainerInfo[]>(queryKey);
 
       queryClient.setQueryData<ContainerInfo[]>(queryKey, (containers) => {
         if (!containers) return containers;
 
-        return containers.map((container) => {
-          if (container.Id !== containerId) return container;
-
-          return {
-            ...container,
-            State: "exited",
-            Status: container.Status.replace(/^Up \d+ /, "Exited"),
-          } as ContainerInfo;
-        });
+        return containers.map((container) =>
+          container.Id === containerId
+            ? {
+                ...container,
+                State: "exited",
+                Status: "Exited",
+              }
+            : container,
+        );
       });
 
       return { previewContainers };
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey });
     },
 
     onError: (err, _, context) => {
       console.error(err);
 
       const previewContainers = context?.previewContainers;
-      if (!previewContainers) return;
 
-      queryClient.setQueryData(queryKey, previewContainers);
+      if (!previewContainers) {
+        return queryClient.invalidateQueries({ queryKey });
+      }
+      
+      queryClient.setQueryData(queryKey, context.previewContainers);
     },
   });
 }
