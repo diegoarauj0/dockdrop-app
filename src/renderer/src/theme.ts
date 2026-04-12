@@ -41,7 +41,7 @@ const sharedTheme = {
     "control-min-height": "48px",
     "sidebar-width": "300px",
     "sidebar-collapsed-width": "88px",
-    "content-max-width": "480px",
+    "content-max-width": "600px",
   },
   "border-widths": {
     thin: "1px",
@@ -92,5 +92,3 @@ export const lightTheme = {
 
 export type ThemeType = "dark" | "light";
 export type Theme = typeof darkTheme;
-
-export const STORAGE_KEY = "dockdrop-theme";

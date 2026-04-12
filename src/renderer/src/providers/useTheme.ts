@@ -2,7 +2,6 @@ import { createContext, useContext } from "react";
 import { Theme, ThemeType } from "../theme";
 
 interface ThemeContextType {
-  toggleTheme: () => void;
   currentTheme: Theme;
   theme: ThemeType;
 }

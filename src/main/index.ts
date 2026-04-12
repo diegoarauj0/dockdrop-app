@@ -4,6 +4,7 @@ import { registerDockerodeIpc } from "./ipc/docker.ipc";
 import { app, shell, BrowserWindow } from "electron";
 import icon from "../../resources/icon.png?asset";
 import { join } from "path";
+import { registerSettingsIpc } from "./ipc/settings.ipc";
 
 const MAIN_WINDOW_CONFIG = {
   width: 900,
@@ -40,6 +41,7 @@ function createWindow(): BrowserWindow {
 
 function registerIpcHandlers(win: BrowserWindow): void {
   registerDockerodeIpc();
+  registerSettingsIpc()
   registerDockerStatsIpc(win);
 }
 
