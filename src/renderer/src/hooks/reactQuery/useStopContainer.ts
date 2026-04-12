@@ -19,8 +19,6 @@ export function useStopContainer(): UseStopContainerMutationResult {
     mutationFn: (containerId: string) => dockerService.stopContainer(containerId),
 
     onMutate: async (containerId: string) => {
-      await queryClient.invalidateQueries({ queryKey });
-
       const previewContainers = queryClient.getQueryData<ContainerInfo[]>(queryKey);
 
       queryClient.setQueryData<ContainerInfo[]>(queryKey, (containers) => {

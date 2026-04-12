@@ -19,8 +19,6 @@ export function useStartContainer(): UseStartContainerMutationResult {
     mutationFn: (containerId: string) => dockerService.startContainer(containerId),
 
     onMutate: async (containerId: string) => {
-      await queryClient.invalidateQueries({ queryKey });
-
       const previewContainers = queryClient.getQueryData<ContainerInfo[]>(queryKey);
 
       queryClient.setQueryData<ContainerInfo[]>(queryKey, (containers) => {
