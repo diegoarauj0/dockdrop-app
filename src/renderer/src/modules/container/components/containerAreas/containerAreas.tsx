@@ -4,13 +4,14 @@ import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerAr
 import { ContainerListAreaComponent } from "../containerListArea/containerListArea";
 import { useMutationStartContainer } from "../../queries/useMutationStartContainer";
 import { useMutationStopContainer } from "../../queries/useMutationStopContainer";
+import { useTheme } from "../../../theme/providers/theme.context";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { useTranslation } from "react-i18next";
 import * as S from "./containerAreas.style";
 import { ReactNode, useState } from "react";
 import { Trash2, Info } from "lucide-react";
 import { ContainerInfo } from "dockerode";
-import { useTheme } from "../../../theme/providers/theme.context";
-import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 
 interface InterfaceContainerData {
   containerId: string;
@@ -32,6 +33,11 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [containerToDelete, setContainerToDelete] = useState<InterfaceContainerData | null>(null);
 
+  const deleteContainerNotificationId = (containerId: string): string => `DELETE_CONTAINER_NOTIFICATION-${containerId}`;
+  const startContainerNotificationId = (containerId: string): string => `START_CONTAINER_NOTIFICATION-${containerId}`;
+  const stopContainerNotificationId = (containerId: string): string => `STOP_CONTAINER_NOTIFICATION-${containerId}`;
+
+
   const handleDragEnd = (event: DragEndEvent): void => {
     const { active, over } = event;
 
@@ -43,11 +49,57 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
       if (containerData.currentState === "exited" && targetArea === "inactive-area") return;
 
       if (targetArea === "active-area") {
-        return startMutate(containerData.containerId);
+        toast.loading(t("notifications.activating", { name: containerData.containerName }), {
+          toastId: startContainerNotificationId(containerData.containerId),
+          isLoading: true,
+        });
+
+        return startMutate(containerData.containerId, {
+          onSuccess: () =>
+            toast.update(startContainerNotificationId(containerData.containerId), {
+              isLoading: false,
+              render: t("notifications.activated_success"),
+              closeButton: true,
+              autoClose: 3000,
+              type: "success",
+            }),
+
+          onError: () =>
+            toast.update(startContainerNotificationId(containerData.containerId), {
+              isLoading: false,
+              render: t("notifications.activated_error"),
+              closeButton: true,
+              autoClose: 3000,
+              type: "error",
+            }),
+        });
       }
 
       if (targetArea === "inactive-area") {
-        return stopMutate(containerData.containerId);
+        toast.loading(t("notifications.deactivating", { name: containerData.containerName }), {
+          toastId: stopContainerNotificationId(containerData.containerId),
+          isLoading: true,
+        });
+
+        return stopMutate(containerData.containerId, {
+          onSuccess: () =>
+            toast.update(stopContainerNotificationId(containerData.containerId), {
+              isLoading: false,
+              render: t("notifications.deactivated_success"),
+              closeButton: true,
+              autoClose: 3000,
+              type: "success",
+            }),
+
+          onError: () =>
+            toast.update(stopContainerNotificationId(containerData.containerId), {
+              isLoading: false,
+              render: t("notifications.deactivated_error"),
+              closeButton: true,
+              autoClose: 3000,
+              type: "error",
+            }),
+        });
       }
 
       if (targetArea === "delete-area") {
@@ -60,7 +112,30 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
 
   const handleConfirmDelete = (): void => {
     if (containerToDelete) {
-      deleteMutate(containerToDelete.containerId);
+      toast.loading(t("notifications.deleting", { name: containerToDelete.containerName }), {
+        toastId: deleteContainerNotificationId(containerToDelete.containerId),
+        isLoading: true,
+      });
+
+      deleteMutate(containerToDelete.containerId, {
+        onSuccess: () =>
+          toast.update(deleteContainerNotificationId(containerToDelete.containerId), {
+            isLoading: false,
+            render: t("notifications.deleted_success"),
+            closeButton: true,
+            autoClose: 3000,
+            type: "success",
+          }),
+
+        onError: () =>
+          toast.update(deleteContainerNotificationId(containerToDelete.containerId), {
+            isLoading: false,
+            render: t("notifications.deleted_error"),
+            closeButton: true,
+            autoClose: 3000,
+            type: "error",
+          }),
+      });
       setShowDeleteDialog(false);
       setContainerToDelete(null);
     }
@@ -75,19 +150,12 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
     <DndContext onDragEnd={handleDragEnd}>
       <S.ActionAreas>
         <BaseContainerAreaComponent
-          minHeight={currentTheme.sizes["action-area-height"]}
           borderColor={currentTheme.danger}
           id="delete-area"
           title={t("actions.remove")}
           icon={Trash2}
         />
-        <BaseContainerAreaComponent
-          minHeight={currentTheme.sizes["action-area-height"]}
-          borderColor={currentTheme.info}
-          id="inspect-area"
-          title={t("dialog.inspect")}
-          icon={Info}
-        />
+        <BaseContainerAreaComponent borderColor={currentTheme.info} id="inspect-area" title={t("dialog.inspect")} icon={Info} />
       </S.ActionAreas>
 
       <S.ContainerAreas>

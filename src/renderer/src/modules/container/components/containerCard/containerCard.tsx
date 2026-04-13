@@ -32,7 +32,7 @@ export function ContainerCardComponent(props: InterfaceContainerCardProps): Reac
         <S.Header>
           <S.TitleGroup>
             <S.IconWrapper $state={State}>
-              <Box size={16} />
+              <Box size={32} />
             </S.IconWrapper>
 
             <S.TitleText>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { slideUpFadeAnimation } from "../../../theme/keyFrames";
 
 export const Dashboard = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ export const TopBar = styled.div`
   justify-content: space-between;
   position: sticky;
   top: 0%;
+  animation: ${slideUpFadeAnimation} 0.5s;
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
     flex-direction: column;

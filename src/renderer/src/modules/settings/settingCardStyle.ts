@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { slideUpFadeAnimation } from "../theme/keyFrames";
 
 export const CardsContainer = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ export const Card = styled.div`
   border-radius: ${({ theme }) => theme.radii.lg};
   padding: ${({ theme }) => theme.spacing.lg};
   width: 100%;
+  animation: ${slideUpFadeAnimation} 0.5s;
 `;
 
 export const CardLabel = styled.span`

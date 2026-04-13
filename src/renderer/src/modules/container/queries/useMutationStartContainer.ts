@@ -38,10 +38,6 @@ export function useMutationStartContainer(): UseStartContainerMutationResultType
       return { previewContainers };
     },
 
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey, exact: true });
-    },
-
     onError: (err, _, context) => {
       console.error(err);
 

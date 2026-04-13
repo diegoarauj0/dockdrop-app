@@ -36,6 +36,17 @@
       "deleteConfirm": "Tem certeza que deseja remover",
       "cancel": "Cancelar",
       "inspect": "Inspecionar Container"
+    },
+    "notifications": {
+      "activating": "Ativando container {{name}}...",
+      "activated_success": "Container foi ativado com sucesso",
+      "activated_error": "Não foi possivel ativar o container",
+      "deactivating": "Desativando container {{name}}...",
+      "deactivated_success": "Container foi desativado com sucesso",
+      "deactivated_error": "Não foi possivel desativar o container",
+      "deleting": "Deletando container {{name}}...",
+      "deleted_success": "Container deletado com sucesso",
+      "deleted_error": "Não foi possivel deletar esse container"
     }
   }
 }

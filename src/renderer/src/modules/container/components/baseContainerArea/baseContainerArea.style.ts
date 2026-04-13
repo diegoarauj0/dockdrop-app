@@ -4,6 +4,7 @@ export const BaseContainerArea = styled.section<{ $active: boolean }>`
   background-color: ${(props) => props.theme["bg-dark"]};
   border-radius: ${(props) => props.theme.radii.lg};
   display: flex;
+  width: 100%;
   border: 2px ${(props) => (props.$active ? "solid" : "dashed")};
   flex-direction: column;
   gap: ${(props) => props.theme.spacing.md};

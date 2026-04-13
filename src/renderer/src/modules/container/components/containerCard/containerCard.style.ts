@@ -62,9 +62,9 @@ export const IconWrapper = styled.div<IStateProps>`
   color: ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
   display: flex;
   flex-shrink: 0;
-  height: ${(props) => props.theme.sizes.iconMd};
+  height: ${(props) => props.theme.sizes.iconLg};
   justify-content: center;
-  width: ${(props) => props.theme.sizes.iconMd};
+  width: ${(props) => props.theme.sizes.iconLg};
 `;
 
 export const TitleText = styled.div`

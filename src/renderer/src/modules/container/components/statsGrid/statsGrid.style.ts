@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { slideUpFadeAnimation } from "../../../theme/keyFrames";
 
 export const StatsGrid = styled.div`
   display: grid;
@@ -6,11 +7,11 @@ export const StatsGrid = styled.div`
   gap: ${(props) => props.theme.spacing.lg};
 
   @media (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto auto;
   }
 `;
 
-export const StatCard = styled.article`
+export const StatCard = styled.article<{ $last: boolean }>`
   background: linear-gradient(${(props) => `${props.theme["bg-light"]}, ${props.theme.bg}`});
   border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.highlight};
   border-radius: ${(props) => props.theme.radii.lg};
@@ -20,6 +21,11 @@ export const StatCard = styled.article`
   flex-direction: column;
   justify-content: space-between;
   gap: ${(props) => props.theme.spacing.md};
+  animation: ${slideUpFadeAnimation} 0.5s;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.laptop}px) {
+    grid-column: ${(props) => (props.$last ? "1 / 3" : "0")};
+  }
 `;
 
 export const StatHeader = styled.div`

@@ -50,8 +50,8 @@ export function StatsGridComponent(): React.ReactNode {
 
   return (
     <S.StatsGrid>
-      {stats.map(({ accent, highlight, icon, label, value }) => (
-        <S.StatCard key={label}>
+      {stats.map(({ accent, highlight, icon, label, value }, index) => (
+        <S.StatCard key={label} $last={index === stats.length - 1}>
           <S.StatHeader>
             <S.StatIcon $accent={accent}>{icon}</S.StatIcon>
             <S.StatHighlight>{highlight}</S.StatHighlight>
