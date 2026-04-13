@@ -1,27 +1,27 @@
-import { ThemeProvider } from "./providers/theme.provider";
-import GlobalStyle from "./global.style";
-import { router } from "./router";
-import { RouterProvider } from "react-router";
+import { ContainerStatsProvider } from "./modules/container/providers/containerStats.provider";
+import { LanguageProvider } from "./modules/language/providers/language.provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ContainerStatsProvider } from "./providers/containerStats.provider";
-import { SettingsProvider } from "./providers/settings.provider";
-import { LanguageProvider } from "./providers/language.provider";
+import { ThemeProvider } from "./modules/theme/providers/theme.provider";
+import { SettingsProvider } from "./modules/settings/settings.provider";
+import GlobalStyle from "./modules/theme/global.style";
+import { RouterProvider } from "react-router";
+import { router } from "./router";
 
 const queryClient = new QueryClient();
 
 function App(): React.ReactNode {
   return (
     <QueryClientProvider client={queryClient}>
-      <SettingsProvider>
-        <LanguageProvider>
-          <ContainerStatsProvider>
-            <ThemeProvider>
+      <ThemeProvider>
+        <SettingsProvider>
+          <LanguageProvider>
+            <ContainerStatsProvider>
               <GlobalStyle />
               <RouterProvider router={router} />
-            </ThemeProvider>
-          </ContainerStatsProvider>
-        </LanguageProvider>
-      </SettingsProvider>
+            </ContainerStatsProvider>
+          </LanguageProvider>
+        </SettingsProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

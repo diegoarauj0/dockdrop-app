@@ -1,8 +1,8 @@
+import { DockerErrorPage } from "./modules/home/pages/dockerError/dockerError";
+import { DashboardPage } from "./modules/home/pages/dashboard/dashboard";
+import { SettingsPage } from "./modules/settings/pages/settings/settings";
 import { createBrowserRouter, Navigate } from "react-router";
-import { DashboardPage } from "./pages/dashboard/dashboard";
-import { DockerErrorPage } from "./pages/dockerError/dockerError";
-import { AppLayout } from "./layouts/app/app";
-import { SettingsPage } from "./pages/settings/settings";
+import { AppLayout } from "./modules/shared/layouts/app/app";
 
 export const router = createBrowserRouter([
   {
