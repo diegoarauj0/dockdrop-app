@@ -1,8 +1,9 @@
 import { DraggableContainerCardComponent } from "../draggableContainerCard/draggableContainerCard";
-import { useTheme } from "../../../theme/theme.context";
+import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerArea";
+import { useTheme } from "../../../theme/providers/theme.context";
 import * as S from "./containerListArea.style";
 import { ContainerInfo } from "dockerode";
-import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerArea";
+import { useTranslation } from "react-i18next";
 
 interface InterfaceContainerListAreaProps {
   variant: "active" | "inactive";
@@ -17,6 +18,7 @@ export function ContainerListAreaComponent(props: InterfaceContainerListAreaProp
 
   const isEmpty = containers.length === 0;
   const { currentTheme } = useTheme();
+  const { t } = useTranslation("container");
 
   if (isEmpty) {
     return (
@@ -27,7 +29,7 @@ export function ContainerListAreaComponent(props: InterfaceContainerListAreaProp
         title={title}
         rightContent={<S.Badge style={{ borderColor }}>{containers.length}</S.Badge>}
       >
-        <S.Placeholder>{variant === "active" ? "No active containers" : "No inactive containers"}</S.Placeholder>
+        <S.Placeholder>{variant === "active" ? t("list.noActiveContainers") : t("list.noInactiveContainers")}</S.Placeholder>
       </BaseContainerAreaComponent>
     );
   }

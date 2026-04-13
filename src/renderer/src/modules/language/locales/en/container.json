@@ -1,0 +1,41 @@
+{
+  "container": {
+    "title": "Container",
+    "status": {
+      "running": "Running",
+      "exited": "Exited",
+      "paused": "Paused",
+      "created": "Created",
+      "restarting": "Restarting",
+      "removing": "Removing",
+      "dead": "Dead"
+    },
+    "metrics": {
+      "cpu": "CPU",
+      "ram": "RAM",
+      "uptime": "Uptime",
+      "totalContainers": "Total Containers",
+      "active": "Active",
+      "inactive": "Inactive",
+      "running": "running",
+      "cpuUsage": "CPU Usage",
+      "stoppedRecently": "Stopped recently",
+      "loading": "Loading..."
+    },
+    "list": {
+      "noActiveContainers": "No active containers",
+      "noInactiveContainers": "No inactive containers"
+    },
+    "actions": {
+      "start": "Start",
+      "stop": "Stop",
+      "restart": "Restart",
+      "remove": "Remove"
+    },
+    "dialog": {
+      "deleteConfirm": "Are you sure you want to delete",
+      "cancel": "Cancel",
+      "inspect": "Inspect Container"
+    }
+  }
+}

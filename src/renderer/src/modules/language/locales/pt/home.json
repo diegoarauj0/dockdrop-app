@@ -1,0 +1,13 @@
+{
+  "home": {
+    "home_dashboard": {
+      "title": "Painel",
+      "new_container": "Novo Container",
+      "search": "Buscar containers..."
+    },
+    "home_docker_error": {
+      "title": "Não foi possível acessar o Docker",
+      "message": "Certifique-se de que o Docker está instalado e em execução, ou verifique se seu usuário está no grupo docker."
+    }
+  }
+}

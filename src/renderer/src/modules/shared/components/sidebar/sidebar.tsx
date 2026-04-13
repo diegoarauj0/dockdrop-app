@@ -2,6 +2,7 @@ import { Boxes, ChevronLeft, ChevronRight, LayoutDashboard, Settings } from "luc
 import { Link, useLocation } from "react-router";
 import { ReactElement } from "react";
 import * as S from "./sidebar.style";
+import { useTranslation } from "react-i18next";
 
 interface InterfaceSideBarComponentProps {
   onToggleCollapse: () => void;
@@ -10,10 +11,11 @@ interface InterfaceSideBarComponentProps {
 
 export function SideBarComponent({ isCollapsed, onToggleCollapse }: InterfaceSideBarComponentProps): React.ReactNode {
   const { pathname } = useLocation();
+  const { t } = useTranslation("shared");
 
   const links: { name: string; link: string; icon: ReactElement }[] = [
-    { name: "Dashboard", link: "/dashboard", icon: <LayoutDashboard /> },
-    { name: "Settings", link: "/settings", icon: <Settings /> },
+    { name: t("shared_sidebar.dashboard"), link: "/dashboard", icon: <LayoutDashboard /> },
+    { name: t("shared_sidebar.settings"), link: "/settings", icon: <Settings /> },
   ];
 
   return (

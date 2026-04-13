@@ -6,10 +6,12 @@ import { ContainerInfo } from "dockerode";
 import * as S from "./dashboard.style";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function DashboardPage(): React.ReactNode {
   const [filteredContainers, setFilteredContainers] = useState<ContainerInfo[] | null>(null);
   const { data } = useContainersQuery(true);
+  const { t } = useTranslation("home");
 
   return (
     <S.Dashboard>
@@ -18,7 +20,7 @@ export function DashboardPage(): React.ReactNode {
 
         <S.CreateButton type="button">
           <Plus size={16} strokeWidth={2.5} />
-          New Container
+          {t("home_dashboard.new_container")}
         </S.CreateButton>
       </S.TopBar>
 

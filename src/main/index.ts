@@ -41,7 +41,7 @@ function createWindow(): BrowserWindow {
 
 function registerIpcHandlers(win: BrowserWindow): void {
   registerDockerodeIpc();
-  registerSettingsIpc()
+  registerSettingsIpc();
   registerDockerStatsIpc(win);
 }
 

@@ -1,10 +1,13 @@
 import * as S from "./dockerError.style";
+import { useTranslation } from "react-i18next";
 
 export function DockerErrorPage(): React.ReactNode {
+  const { t } = useTranslation("home");
+
   return (
     <S.ErrorContainer>
-      <S.ErrorTitle>Unable to access Docker</S.ErrorTitle>
-      <S.ErrorMessage>Make sure Docker is installed and running, or check if your user is in the docker group.</S.ErrorMessage>
+      <S.ErrorTitle>{t("home_docker_error.title")}</S.ErrorTitle>
+      <S.ErrorMessage>{t("home_docker_error.message")}</S.ErrorMessage>
     </S.ErrorContainer>
   );
 }

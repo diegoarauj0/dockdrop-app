@@ -1,15 +1,16 @@
+import { ConfirmDialogComponent } from "../../../shared/components/confirmDialog/confirmDialog";
 import { useMutationDeleteContainer } from "../../queries/useMutationDeleteContainer";
 import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerArea";
 import { ContainerListAreaComponent } from "../containerListArea/containerListArea";
 import { useMutationStartContainer } from "../../queries/useMutationStartContainer";
 import { useMutationStopContainer } from "../../queries/useMutationStopContainer";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { useTheme } from "../../../theme/theme.context";
 import * as S from "./containerAreas.style";
 import { ReactNode, useState } from "react";
 import { Trash2, Info } from "lucide-react";
 import { ContainerInfo } from "dockerode";
-import { ConfirmDialogComponent } from "../../../shared/components/confirmDialog/confirmDialog";
+import { useTheme } from "../../../theme/providers/theme.context";
+import { useTranslation } from "react-i18next";
 
 interface InterfaceContainerData {
   containerId: string;
@@ -23,6 +24,7 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
   const { mutate: deleteMutate } = useMutationDeleteContainer();
 
   const { currentTheme } = useTheme();
+  const { t } = useTranslation("container");
 
   const activeContainers = containers.filter(({ State }) => State === "running");
   const inactiveContainers = containers.filter(({ State }) => State === "exited");
@@ -76,14 +78,14 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
           minHeight={currentTheme.sizes["action-area-height"]}
           borderColor={currentTheme.danger}
           id="delete-area"
-          title="Delete Container"
+          title={t("actions.remove")}
           icon={Trash2}
         />
         <BaseContainerAreaComponent
           minHeight={currentTheme.sizes["action-area-height"]}
           borderColor={currentTheme.info}
           id="inspect-area"
-          title="Inspect Container"
+          title={t("dialog.inspect")}
           icon={Info}
         />
       </S.ActionAreas>
@@ -92,14 +94,14 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
         <ContainerListAreaComponent
           borderColor={currentTheme.success}
           id="active-area"
-          title="Active Containers"
+          title={t("metrics.active")}
           variant="active"
           containers={activeContainers}
         />
         <ContainerListAreaComponent
           borderColor={currentTheme.danger}
           id="inactive-area"
-          title="Inactive Containers"
+          title={t("metrics.inactive")}
           variant="inactive"
           containers={inactiveContainers}
         />
@@ -107,10 +109,10 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
 
       <ConfirmDialogComponent
         open={showDeleteDialog}
-        title="Delete Container"
-        message={`Are you sure you want to delete "${containerToDelete?.containerName}"? This action cannot be undone.`}
-        confirmText="Delete"
-        cancelText="Cancel"
+        title={t("actions.remove")}
+        message={`${t("dialog.deleteConfirm")} "${containerToDelete?.containerName}"?`}
+        confirmText={t("actions.remove")}
+        cancelText={t("dialog.cancel")}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
       />

@@ -12,7 +12,7 @@ export class SettingsService {
 
   public static readonly SETTINGS_FILE_PATH = path.join(app.getPath("userData"), "settings.json");
   public static readonly DEFAULT_SETTINGS: ISettings = {
-    language: "en-US",
+    language: "en",
     theme: "dark",
   };
 

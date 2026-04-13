@@ -4,6 +4,7 @@ import { Box, GripVertical } from "lucide-react";
 import * as S from "./containerCard.style";
 import { ContainerInfo } from "dockerode";
 import { containerMetricsService } from "../../containerMetrics.service";
+import { useTranslation } from "react-i18next";
 
 interface InterfaceContainerCardProps extends ContainerInfo {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,6 +17,7 @@ export function ContainerCardComponent(props: InterfaceContainerCardProps): Reac
   const { Names, Image, State, Id, Status, ref, style, attributes } = props;
 
   const { containerStats } = useContainerStats();
+  const { t } = useTranslation("container");
 
   const stat = containerStats.find(({ id }) => id === Id);
   const containerName = Names[0].replace("/", "");
@@ -41,18 +43,18 @@ export function ContainerCardComponent(props: InterfaceContainerCardProps): Reac
 
           <S.StatusContainer>
             <S.StatusDot $state={State} />
-            <S.StatusText $state={State}>{State}</S.StatusText>
+            <S.StatusText $state={State}>{t(`status.${State}`)}</S.StatusText>
           </S.StatusContainer>
         </S.Header>
 
         <S.Metrics>
           <S.Metric>
-            <S.MetricLabel>CPU</S.MetricLabel>
+            <S.MetricLabel>{t("metrics.cpu")}</S.MetricLabel>
             <S.MetricValue>{stat ? containerMetricsService.getCPUPercent(stat).toFixed(2) + "%" : "-"}</S.MetricValue>
           </S.Metric>
 
           <S.Metric>
-            <S.MetricLabel>RAM</S.MetricLabel>
+            <S.MetricLabel>{t("metrics.ram")}</S.MetricLabel>
             <S.MetricValue>
               {stat ? (
                 <>
@@ -68,7 +70,7 @@ export function ContainerCardComponent(props: InterfaceContainerCardProps): Reac
           </S.Metric>
 
           <S.Metric>
-            <S.MetricLabel>Uptime</S.MetricLabel>
+            <S.MetricLabel>{t("metrics.uptime")}</S.MetricLabel>
             <S.MetricValue>{Status}</S.MetricValue>
           </S.Metric>
         </S.Metrics>

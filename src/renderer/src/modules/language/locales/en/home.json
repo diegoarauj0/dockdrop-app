@@ -1,0 +1,13 @@
+{
+  "home": {
+    "home_dashboard": {
+      "title": "Dashboard",
+      "new_container": "New Container",
+      "search": "Search containers..."
+    },
+    "home_docker_error": {
+      "title": "Unable to access Docker",
+      "message": "Make sure Docker is installed and running, or check if your user is in the docker group."
+    }
+  }
+}

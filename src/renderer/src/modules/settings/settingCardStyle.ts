@@ -17,6 +17,7 @@ export const Card = styled.div`
 
 export const CardLabel = styled.span`
   display: block;
+  text-transform: uppercase;
   font-size: ${({ theme }) => theme["font-sizes"].sm};
   font-weight: 600;
   color: ${({ theme }) => theme["text-muted"]};

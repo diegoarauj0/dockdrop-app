@@ -1,0 +1,12 @@
+{
+  "shared": {
+    "shared_sidebar": {
+      "dashboard": "Dashboard",
+      "settings": "Settings"
+    },
+    "shared_confirm_dialog": {
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    }
+  }
+}

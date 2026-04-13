@@ -2,6 +2,7 @@ import { Search as SearchIcon } from "lucide-react";
 import * as S from "./searchContainers.style";
 import { ContainerInfo } from "dockerode";
 import Fuse from "fuse.js";
+import { useTranslation } from "react-i18next";
 
 interface InterfaceSearchProps {
   setResult: (containers: ContainerInfo[] | null) => void;
@@ -9,6 +10,8 @@ interface InterfaceSearchProps {
 }
 
 export function SearchContainersComponent({ setResult, containers }: InterfaceSearchProps): React.ReactNode {
+  const { t } = useTranslation("home");
+
   const handleSearch = (search: string): void => {
     if (search.length === 0 || !search) return setResult(null);
 
@@ -27,7 +30,7 @@ export function SearchContainersComponent({ setResult, containers }: InterfaceSe
       <SearchIcon size={18} />
       <S.SearchInput
         aria-label="Search containers"
-        placeholder="Search containers..."
+        placeholder={t("home_dashboard.search")}
         type="text"
         onChange={(e) => handleSearch(e.target.value || "")}
       />

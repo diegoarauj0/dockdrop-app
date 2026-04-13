@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "title": "Settings",
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": {
+      "title": "Language",
+      "pt": "Português",
+      "en": "English"
+    }
+  }
+}

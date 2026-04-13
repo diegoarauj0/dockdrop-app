@@ -1,0 +1,15 @@
+{
+  "settings": {
+    "title": "Configurações",
+    "theme": {
+      "title": "Temas",
+      "light": "Claro",
+      "dark": "Escuro"
+    },
+    "language": {
+      "title": "Idiomas",
+      "pt": "Português",
+      "en": "English"
+    }
+  }
+}
