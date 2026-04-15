@@ -1,10 +1,10 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { dockerService } from "../services/docker.service";
+import { dockerClient } from "../docker.client";
 
 export function usePingQuery(): UseQueryResult<{ success: boolean }> {
   return useQuery({
     queryKey: ["docker-ping"],
-    queryFn: dockerService.ping,
+    queryFn: () => dockerClient.ping(),
     refetchInterval: 5000,
   });
 }

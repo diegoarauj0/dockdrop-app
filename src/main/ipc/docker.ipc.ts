@@ -8,8 +8,8 @@ export function registerDockerodeIpc(): void {
     return dockerService.ping();
   });
 
-  ipcMain.handle("docker:list_containers", async (_, all: boolean = true) => {
-    return dockerService.listContainers(all);
+  ipcMain.handle("docker:list_containers", async () => {
+    return dockerService.listContainers();
   });
 
   ipcMain.handle("docker:delete_container", async (_, containerId: string) => {

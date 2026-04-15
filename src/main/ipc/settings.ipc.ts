@@ -1,4 +1,4 @@
-import { ISettings, SettingsService } from "../service/settings.service";
+import { InterfaceSettings, SettingsService } from "../service/settings.service";
 import { ipcMain } from "electron";
 
 const settingsService = new SettingsService();
@@ -8,7 +8,7 @@ export function registerSettingsIpc(): void {
     return settingsService.reset();
   });
 
-  ipcMain.handle("settings:get", async (_, key: keyof ISettings) => {
+  ipcMain.handle("settings:get", async (_, key: keyof InterfaceSettings) => {
     return settingsService.get(key);
   });
 
@@ -16,11 +16,11 @@ export function registerSettingsIpc(): void {
     return settingsService.getAll();
   });
 
-  ipcMain.handle("settings:set", async (_, key: keyof ISettings, value: ISettings[keyof ISettings]) => {
+  ipcMain.handle("settings:set", async (_, key: keyof InterfaceSettings, value: InterfaceSettings[keyof InterfaceSettings]) => {
     return settingsService.set(key, value);
   });
 
-  ipcMain.handle("settings:set_all", async (_, settings: ISettings) => {
+  ipcMain.handle("settings:set_all", async (_, settings: InterfaceSettings) => {
     return settingsService.setAll(settings);
   });
 }

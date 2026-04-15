@@ -1,9 +1,9 @@
 import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
-import { dockerService } from "../../docker/services/docker.service";
+import { dockerClient } from "../../docker/docker.client";
 import { ContainerInfo } from "dockerode";
 
 type UseStopContainerMutationResultType = UseMutationResult<
-  { success: boolean; error?: string },
+  { result: boolean; error?: string },
   unknown,
   string,
   { previewContainers: ContainerInfo[] | undefined }
@@ -14,7 +14,7 @@ export function useMutationStopContainer(): UseStopContainerMutationResultType {
   const queryKey = ["docker-containers", true];
 
   return useMutation({
-    mutationFn: (containerId: string) => dockerService.stopContainer(containerId),
+    mutationFn: (containerId: string) => dockerClient.stopContainer(containerId),
 
     onMutate: async (containerId: string) => {
       await queryClient.cancelQueries({ queryKey });
@@ -48,6 +48,7 @@ export function useMutationStopContainer(): UseStopContainerMutationResultType {
       }
 
       queryClient.setQueryData(queryKey, context.previewContainers);
+      return;
     },
   });
 }

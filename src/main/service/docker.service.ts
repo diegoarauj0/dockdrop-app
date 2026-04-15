@@ -1,72 +1,72 @@
 import { is } from "@electron-toolkit/utils";
 import Docker from "dockerode";
 
+interface InterfaceSafeExecute<Data> {
+  success: boolean;
+  error?: string;
+  data?: Data;
+}
+
 export class DockerService {
   private readonly docker = new Docker();
   private readonly isDev = is.dev;
 
-  public async ping(): Promise<{ success: boolean; error?: string }> {
-    console.log(`[MAIN] DockerService.ping`);
+  private async safeExecute<Result>(callback: () => Promise<Result>): Promise<InterfaceSafeExecute<Result>> {
     try {
+      const data = await callback();
+      return { success: true, data };
+    } catch (err) {
+      console.error(err);
+      return { success: false, error: JSON.stringify(err) };
+    }
+  }
+
+  public async ping(): Promise<InterfaceSafeExecute<undefined>> {
+    this.logger("ping");
+
+    return this.safeExecute<undefined>(async () => {
       await this.docker.ping();
-      return { success: true };
-    } catch (error) {
-      if (this.isDev) {
-        console.warn("[MAIN] DockerodeService.ping error");
-        console.error(error);
-      }
-
-      return { success: false, error: String(error) };
-    }
+    });
   }
 
-  public async listContainers(all = true): Promise<Docker.ContainerInfo[]> {
-    console.log(`[MAIN] DockerService.listContainers ${JSON.stringify({ all })}`);
-    return this.docker.listContainers({ all });
+  public async listContainers(): Promise<InterfaceSafeExecute<Docker.ContainerInfo[]>> {
+    this.logger("listContainer");
+
+    return this.safeExecute(async () => {
+      return this.docker.listContainers({ all: true });
+    });
   }
 
-  public async deleteContainer(containerId: string): Promise<{ success: boolean; error?: string }> {
-    console.log(`[MAIN] DockerService.deleteContainer ${containerId}`);
-    try {
+  public async deleteContainer(containerId: string): Promise<InterfaceSafeExecute<undefined>> {
+    this.logger("deleteContainer", { containerId });
+
+    return this.safeExecute<undefined>(async () => {
       const container = this.docker.getContainer(containerId);
-      await container.remove({ force: true });
-      return { success: true };
-    } catch (error) {
-      if (this.isDev) {
-        console.warn("[MAIN] DockerService.deleteContainer error");
-        console.error(error);
-      }
-      return { success: false, error: String(error) };
-    }
+      await container.remove();
+    });
   }
 
-  public async startContainer(containerId: string): Promise<{ success: boolean; error?: string }> {
-    console.log(`[MAIN] DockerService.startContainer ${containerId}`);
-    try {
+  public async startContainer(containerId: string): Promise<InterfaceSafeExecute<undefined>> {
+    this.logger("startContainer", { containerId });
+
+    return this.safeExecute<undefined>(async () => {
       const container = this.docker.getContainer(containerId);
       await container.start();
-      return { success: true };
-    } catch (error) {
-      if (this.isDev) {
-        console.warn("[MAIN] DockerService.startContainer error");
-        console.error(error);
-      }
-      return { success: false, error: String(error) };
-    }
+    });
   }
 
-  public async stopContainer(containerId: string): Promise<{ success: boolean; error?: string }> {
-    console.log(`[MAIN] DockerService.stopContainer ${containerId}`);
-    try {
+  public async stopContainer(containerId: string): Promise<InterfaceSafeExecute<undefined>> {
+    this.logger("stopContainer", { containerId });
+
+    return this.safeExecute<undefined>(async () => {
       const container = this.docker.getContainer(containerId);
       await container.stop();
-      return { success: true };
-    } catch (error) {
-      if (this.isDev) {
-        console.warn("[MAIN] DockerService.stopContainer error");
-        console.error(error);
-      }
-      return { success: false, error: String(error) };
-    }
+    });
+  }
+
+  private logger(event: string, data?: unknown): void {
+    if (!this.isDev) return;
+
+    console.log(`[${new Date().toISOString()}] [DockerService] ${event}`, data ?? "");
   }
 }

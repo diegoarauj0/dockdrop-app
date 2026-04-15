@@ -1,22 +1,23 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { dockerService } from "../../docker/services/docker.service";
+import { dockerClient } from "../../docker/docker.client";
 import { ContainerInfo } from "dockerode";
 
 export interface InterfaceUseContainers {
+  containers: ContainerInfo[] | undefined;
   inactiveContainers: ContainerInfo[];
   activeContainers: ContainerInfo[];
-  containers: ContainerInfo[];
 }
 
-export function useContainersQuery(all: boolean): UseQueryResult<InterfaceUseContainers> {
+export function useContainersQuery(): UseQueryResult<InterfaceUseContainers> {
   return useQuery({
-    queryKey: ["docker-containers", all],
-    queryFn: () => dockerService.listContainers(all),
+    queryKey: ["docker-containers"],
+    queryFn: () => dockerClient.listContainers(),
     refetchInterval: 3000,
 
     refetchIntervalInBackground: false,
 
-    select: (containers) => {
+    select: (response) => {
+      const containers = response.data || [];
       return {
         activeContainers: containers.filter(({ State }) => State === "running"),
         inactiveContainers: containers.filter(({ State }) => State === "exited"),

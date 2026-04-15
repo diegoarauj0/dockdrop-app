@@ -1,6 +1,6 @@
 import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
 import { ContainerInfo } from "dockerode";
-import { dockerService } from "../../docker/services/docker.service";
+import { dockerClient } from "../../docker/docker.client";
 
 type UseDeleteMutationResultType = UseMutationResult<
   { success: boolean; error?: string },
@@ -14,7 +14,7 @@ export function useMutationDeleteContainer(): UseDeleteMutationResultType {
   const queryKey = ["docker-containers", true];
 
   return useMutation({
-    mutationFn: (containerId: string) => dockerService.deleteContainer(containerId),
+    mutationFn: (containerId: string) => dockerClient.deleteContainer(containerId),
 
     onMutate: async (containerId: string) => {
       await queryClient.invalidateQueries({ queryKey });

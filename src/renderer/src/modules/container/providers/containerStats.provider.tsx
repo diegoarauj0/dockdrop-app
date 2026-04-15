@@ -1,4 +1,4 @@
-import { dockerStatsManagerService } from "../../docker/services/dockerStatsManager.service";
+import { dockerClient } from "../../docker/docker.client";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
 import { useContainersQuery } from "../queries/useContainersQuery";
 import { ContainerStatsContext } from "./containerStats.context";
@@ -10,17 +10,17 @@ export function ContainerStatsProvider({ children }: PropsWithChildren): ReactNo
 
   data?.activeContainers.forEach(({ Id }) => {
     if (containerStats.find(({ id }) => id === Id)) return;
-    dockerStatsManagerService.start([Id]);
+    dockerClient.startStats([Id]);
   });
 
   containerStats.forEach(({ id }) => {
     if (id === undefined) return;
     if (data?.activeContainers.find(({ Id }) => id === Id)) return;
-    dockerStatsManagerService.stop([id]);
+    dockerClient.stopStats([id]);
   });
 
   useEffect(() => {
-    dockerStatsManagerService.batch((containerStats) => setContainerStats(containerStats));
+    dockerClient.onStatsBatch((containerStats) => setContainerStats(containerStats));
   }, []);
 
   return <ContainerStatsContext.Provider value={{ containerStats }}>{children}</ContainerStatsContext.Provider>;
