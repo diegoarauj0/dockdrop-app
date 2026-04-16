@@ -1,4 +1,4 @@
-import { useSettingsQuery } from "../../settings/queries/useSettingsQuery";
+import { useSettingsQuery } from "../../settings/queries/useSettings.query";
 import { PropsWithChildren, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 

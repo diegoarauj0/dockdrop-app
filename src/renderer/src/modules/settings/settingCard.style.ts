@@ -10,7 +10,7 @@ export const CardsContainer = styled.div`
 
 export const Card = styled.div`
   background: ${({ theme }) => theme.bg};
-  border-top: ${({ theme }) => theme["border-widths"].thin} solid ${({ theme }) => theme["highlight"]};
+  border-top: ${({ theme }) => theme.border_widths.thin} solid ${({ theme }) => theme["highlight"]};
   border-radius: ${({ theme }) => theme.radii.lg};
   padding: ${({ theme }) => theme.spacing.lg};
   width: 100%;
@@ -20,9 +20,9 @@ export const Card = styled.div`
 export const CardLabel = styled.span`
   display: block;
   text-transform: uppercase;
-  font-size: ${({ theme }) => theme["font-sizes"].sm};
+  font-size: ${({ theme }) => theme.font_sizes.sm};
   font-weight: 600;
-  color: ${({ theme }) => theme["text-muted"]};
+  color: ${({ theme }) => theme.text_muted};
   letter-spacing: 0.08em;
   margin-bottom: ${({ theme }) => theme.spacing.lg};
 `;
@@ -38,14 +38,14 @@ export const Button = styled.button<{ $isActive: boolean }>`
   align-items: center;
   width: 50%;
   padding: ${({ theme }) => theme.spacing.md};
-  font-size: ${({ theme }) => theme["font-sizes"].lg};
+  font-size: ${({ theme }) => theme.font_sizes.lg};
   font-weight: 500;
-  color: ${({ theme, $isActive }) => ($isActive ? theme.text : theme["text-muted"])};
-  background: ${({ theme, $isActive }) => ($isActive ? theme["bg-light"] : "transparent")};
+  color: ${({ theme, $isActive }) => ($isActive ? theme.text : theme.text_muted)};
+  background: ${({ theme, $isActive }) => ($isActive ? theme.bg_light : "transparent")};
   border: ${({ theme, $isActive }) =>
     $isActive
-      ? `${theme["border-widths"].regular} solid ${theme.primary}`
-      : `${theme["border-widths"].thin} solid ${theme["border-muted"]}`};
+      ? `${theme.border_widths.regular} solid ${theme.primary}`
+      : `${theme.border_widths.thin} solid ${theme.border_muted}`};
   border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
   transition: all 0.2s ease;
@@ -75,7 +75,7 @@ export const SelectIconContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme["text-muted"]};
+  color: ${({ theme }) => theme.text_muted};
   pointer-events: none;
 `;
 
@@ -83,10 +83,10 @@ export const Select = styled.select`
   width: 100%;
   padding: ${({ theme }) => theme.spacing.md};
   padding-left: ${({ theme }) => theme.spacing.xl};
-  font-size: ${({ theme }) => theme["font-sizes"].lg};
+  font-size: ${({ theme }) => theme.font_sizes.lg};
   color: ${({ theme }) => theme.text};
-  background: ${({ theme }) => theme["bg-light"]};
-  border: ${({ theme }) => theme["border-widths"].thin} solid ${({ theme }) => theme["border-muted"]};
+  background: ${({ theme }) => theme.bg_light};
+  border: ${({ theme }) => theme.border_widths.thin} solid ${({ theme }) => theme.border_muted};
   border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
   outline: none;
@@ -117,6 +117,6 @@ export const SelectArrow = styled.div`
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 6px solid ${({ theme }) => theme["text-muted"]};
+  border-top: 6px solid ${({ theme }) => theme.text_muted};
   pointer-events: none;
 `;

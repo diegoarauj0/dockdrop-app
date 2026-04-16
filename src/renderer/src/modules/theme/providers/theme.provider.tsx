@@ -1,5 +1,5 @@
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
-import { useSettingsQuery } from "../../settings/queries/useSettingsQuery";
+import { useSettingsQuery } from "../../settings/queries/useSettings.query";
 import { darkTheme, lightTheme } from "../theme";
 import { ThemeContext } from "./theme.context";
 import { ReactNode } from "react";

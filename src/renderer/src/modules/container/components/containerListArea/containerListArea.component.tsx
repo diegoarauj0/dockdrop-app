@@ -1,5 +1,5 @@
-import { DraggableContainerCardComponent } from "../draggableContainerCard/draggableContainerCard";
-import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerArea";
+import { DraggableContainerCardComponent } from "../draggableContainerCard/draggableContainerCard.component";
+import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerArea.component";
 import { useTheme } from "../../../theme/providers/theme.context";
 import * as S from "./containerListArea.style";
 import { ContainerInfo } from "dockerode";
@@ -23,7 +23,7 @@ export function ContainerListAreaComponent(props: InterfaceContainerListAreaProp
   if (isEmpty) {
     return (
       <BaseContainerAreaComponent
-        minHeight={currentTheme.sizes["container-list-area-min-height"]}
+        minHeight={currentTheme.sizes.container_list_area_min_height}
         borderColor={borderColor}
         id={id}
         title={title}
@@ -36,7 +36,7 @@ export function ContainerListAreaComponent(props: InterfaceContainerListAreaProp
 
   return (
     <BaseContainerAreaComponent
-      minHeight={currentTheme.sizes["container-list-area-min-height"]}
+      minHeight={currentTheme.sizes.container_list_area_min_height}
       id={id}
       title={title}
       borderColor={borderColor}

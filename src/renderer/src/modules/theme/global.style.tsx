@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme["bg-dark"]};
+    background: ${({ theme }) => theme.bg_dark};
   }
 
   ::-webkit-scrollbar-thumb {

@@ -29,8 +29,8 @@ export const Header = styled.header<InterfaceSidebarStateProps>`
 
 export const ToggleButton = styled.button<InterfaceSidebarStateProps>`
   background: transparent;
-  border: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.border};
-  color: ${(props) => props.theme["text-muted"]};
+  border: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme.border};
+  color: ${(props) => props.theme.text_muted};
   border-radius: ${(props) => props.theme.radii.sm};
   justify-content: center;
   align-items: center;
@@ -38,30 +38,30 @@ export const ToggleButton = styled.button<InterfaceSidebarStateProps>`
   display: flex;
   margin-left: auto;
   margin-top: ${(props) => (props.$isCollapsed ? props.theme.spacing.sm : "0px")};
-  height: ${(props) => props.theme.sizes.iconMd};
-  width: ${(props) => (props.$isCollapsed ? "100%" : props.theme.sizes.iconMd)};
+  height: ${(props) => props.theme.sizes.icon_md};
+  width: ${(props) => (props.$isCollapsed ? "100%" : props.theme.sizes.icon_md)};
   transition:
     background-color 0.2s ease,
     border-color 0.2s ease,
     color 0.2s ease;
 
   &:hover {
-    background-color: ${(props) => props.theme["bg-light"]};
+    background-color: ${(props) => props.theme.bg_light};
     color: ${(props) => props.theme.text};
   }
 `;
 
 export const BrandIcon = styled.div`
   background-color: ${(props) => props.theme.primary};
-  border: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.border};
-  color: ${(props) => props.theme["bg-dark"]};
+  border: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme.border};
+  color: ${(props) => props.theme.bg_dark};
   justify-content: center;
   align-items: center;
   border-radius: ${(props) => props.theme.radii.lg};
   display: flex;
   padding: ${(props) => props.theme.spacing.xs};
-  height: ${(props) => props.theme.sizes.iconLg};
-  width: ${(props) => props.theme.sizes.iconLg};
+  height: ${(props) => props.theme.sizes.icon_lg};
+  width: ${(props) => props.theme.sizes.icon_lg};
 
   svg {
     height: 100%;
@@ -74,7 +74,7 @@ export const BrandIcon = styled.div`
 
 export const BrandName = styled.strong`
   color: ${(props) => props.theme.text};
-  font-size: ${(props) => props.theme["font-sizes"].xl};
+  font-size: ${(props) => props.theme.font_sizes.xl};
   font-weight: 700;
   letter-spacing: -0.02em;
 `;
@@ -106,11 +106,11 @@ export const NavItem = styled.div<{
 }>`
   a {
     align-items: center;
-    background-color: ${(props) => (props.$isActive ? props.theme["bg-light"] : "transparent")};
+    background-color: ${(props) => (props.$isActive ? props.theme.bg_light : "transparent")};
     border-radius: ${(props) => props.theme.radii.sm};
-    color: ${(props) => (props.$isActive ? props.theme.primary : props.theme["text-muted"])};
+    color: ${(props) => (props.$isActive ? props.theme.primary : props.theme.text_muted)};
     display: flex;
-    font-size: ${(props) => props.theme["font-sizes"].md};
+    font-size: ${(props) => props.theme.font_sizes.md};
     font-weight: 600;
     gap: ${(props) => (props.$isCollapsed ? "0" : props.theme.spacing.xs)};
     justify-content: ${(props) => (props.$isCollapsed ? "center" : "flex-start")};
@@ -129,14 +129,14 @@ export const NavItem = styled.div<{
   }
 
   a:hover {
-    background-color: ${(props) => props.theme["bg-light"]};
+    background-color: ${(props) => props.theme.bg_light};
     color: ${(props) => (props.$isActive ? props.theme.primary : props.theme.text)};
   }
 
   svg {
     flex-shrink: 0;
-    height: ${(props) => props.theme.sizes.iconSm};
-    width: ${(props) => props.theme.sizes.iconSm};
+    height: ${(props) => props.theme.sizes.icon_sm};
+    width: ${(props) => props.theme.sizes.icon_sm};
   }
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {

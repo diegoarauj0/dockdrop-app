@@ -1,9 +1,9 @@
-import { ConfirmDialogComponent } from "../../../shared/components/confirmDialog/confirmDialog";
-import { useMutationDeleteContainer } from "../../queries/useMutationDeleteContainer";
-import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerArea";
-import { ContainerListAreaComponent } from "../containerListArea/containerListArea";
-import { useMutationStartContainer } from "../../queries/useMutationStartContainer";
-import { useMutationStopContainer } from "../../queries/useMutationStopContainer";
+import { ConfirmDialogComponent } from "../../../shared/components/confirmDialog/confirmDialog.component";
+import { useMutationDeleteContainer } from "../../queries/useDeleteContainer.mutation";
+import { BaseContainerAreaComponent } from "../baseContainerArea/baseContainerArea.component";
+import { ContainerListAreaComponent } from "../containerListArea/containerListArea.component";
+import { useMutationStartContainer } from "../../queries/useStartContainer.mutation";
+import { useMutationStopContainer } from "../../queries/useStopContainer.mutation";
 import { useTheme } from "../../../theme/providers/theme.context";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,7 @@ interface InterfaceContainerData {
 
 export function ContainerAreasComponent({ containers }: { containers: ContainerInfo[] }): ReactNode {
   const { mutate: startMutate } = useMutationStartContainer();
-  const { mutate: stopMutate } = useMutationStopContainer();
+  const { mutate: stopMutate, mutateAsync: stopMutateAsync } = useMutationStopContainer();
   const { mutate: deleteMutate } = useMutationDeleteContainer();
 
   const { currentTheme } = useTheme();
@@ -36,7 +36,6 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
   const deleteContainerNotificationId = (containerId: string): string => `DELETE_CONTAINER_NOTIFICATION-${containerId}`;
   const startContainerNotificationId = (containerId: string): string => `START_CONTAINER_NOTIFICATION-${containerId}`;
   const stopContainerNotificationId = (containerId: string): string => `STOP_CONTAINER_NOTIFICATION-${containerId}`;
-
 
   const handleDragEnd = (event: DragEndEvent): void => {
     const { active, over } = event;
@@ -110,12 +109,38 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
     }
   };
 
-  const handleConfirmDelete = (): void => {
+  const handleConfirmDelete = async (): Promise<void> => {
     if (containerToDelete) {
       toast.loading(t("notifications.deleting", { name: containerToDelete.containerName }), {
         toastId: deleteContainerNotificationId(containerToDelete.containerId),
         isLoading: true,
       });
+
+      if (containerToDelete.currentState === "running") {
+        toast.loading(t("notifications.deactivating", { name: containerToDelete.containerName }), {
+          toastId: stopContainerNotificationId(containerToDelete.containerId),
+          isLoading: true,
+        });
+        try {
+          await stopMutateAsync(containerToDelete.containerId);
+
+          toast.update(stopContainerNotificationId(containerToDelete.containerId), {
+            isLoading: false,
+            render: t("notifications.deactivated_success"),
+            closeButton: true,
+            autoClose: 3000,
+            type: "success",
+          });
+        } catch {
+          return toast.update(stopContainerNotificationId(containerToDelete.containerId), {
+            isLoading: false,
+            render: t("notifications.deactivated_error"),
+            closeButton: true,
+            autoClose: 3000,
+            type: "error",
+          });
+        }
+      }
 
       deleteMutate(containerToDelete.containerId, {
         onSuccess: () =>

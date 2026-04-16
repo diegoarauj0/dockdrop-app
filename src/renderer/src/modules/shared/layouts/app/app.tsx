@@ -1,5 +1,5 @@
 import { DockerProvider } from "../../../docker/providers/docker.provider";
-import { SideBarComponent } from "../../components/sidebar/sidebar";
+import { SideBarComponent } from "../../components/sidebar/sidebar.component";
 import { Outlet } from "react-router";
 import { useState } from "react";
 import * as S from "./app.style";

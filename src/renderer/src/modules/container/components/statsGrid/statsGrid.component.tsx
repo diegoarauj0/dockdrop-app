@@ -1,12 +1,12 @@
 import { useContainerStats } from "../../providers/containerStats.context";
 import { containerMetricsService } from "../../containerMetrics.service";
-import { useContainersQuery } from "../../queries/useContainersQuery";
+import { useContainersQuery } from "../../queries/useContainers.query";
 import { Activity, Box, Pause } from "lucide-react";
-import * as S from "./statsGrid.style";
 import { useTranslation } from "react-i18next";
+import * as S from "./statsGrid.style";
 
 export function StatsGridComponent(): React.ReactNode {
-  const { data, isPending } = useContainersQuery(true);
+  const { data, isPending } = useContainersQuery();
   const containersStats = useContainerStats();
   const { t } = useTranslation("container");
 
@@ -28,8 +28,8 @@ export function StatsGridComponent(): React.ReactNode {
     {
       icon: <Box size={18} />,
       label: t("metrics.totalContainers"),
-      value: isPending ? t("metrics.loading") : data?.containers.length,
-      highlight: `${data?.activeContainers.length}/${data?.containers.length} ${t("metrics.running")}`,
+      value: isPending ? t("metrics.loading") : data?.containers?.length,
+      highlight: `${data?.activeContainers.length}/${data?.containers?.length} ${t("metrics.running")}`,
       accent: "primary" as const,
     },
     {

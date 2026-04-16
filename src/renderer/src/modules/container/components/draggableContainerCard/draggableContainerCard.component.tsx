@@ -1,4 +1,4 @@
-import { ContainerCardComponent } from "../containerCard/containerCard";
+import { ContainerCardComponent } from "../containerCard/containerCard.component";
 import { useDraggable } from "@dnd-kit/core";
 import { ContainerInfo } from "dockerode";
 

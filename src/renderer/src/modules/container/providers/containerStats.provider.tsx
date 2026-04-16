@@ -1,12 +1,12 @@
 import { dockerClient } from "../../docker/docker.client";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
-import { useContainersQuery } from "../queries/useContainersQuery";
+import { useContainersQuery } from "../queries/useContainers.query";
 import { ContainerStatsContext } from "./containerStats.context";
 import { ContainerStats } from "dockerode";
 
 export function ContainerStatsProvider({ children }: PropsWithChildren): ReactNode {
   const [containerStats, setContainerStats] = useState<ContainerStats[]>([]);
-  const { data } = useContainersQuery(true);
+  const { data } = useContainersQuery();
 
   data?.activeContainers.forEach(({ Id }) => {
     if (containerStats.find(({ id }) => id === Id)) return;

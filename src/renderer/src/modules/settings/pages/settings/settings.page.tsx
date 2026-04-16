@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { SettingCardLanguageComponent } from "../../components/settingsCardLanguage";
-import { SettingCardThemeComponent } from "../../components/settingCardTheme";
-import * as SettingCard from "../../settingCardStyle";
+import { SettingCardLanguageComponent } from "../../components/settingsCardLanguage.component";
+import { SettingCardThemeComponent } from "../../components/settingCardTheme.component";
+import * as SettingCard from "../../settingCard.style";
 import * as S from "./settings.style";
 
 export function SettingsPage(): React.ReactNode {

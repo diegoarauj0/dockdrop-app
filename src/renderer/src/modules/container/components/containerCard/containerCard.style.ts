@@ -5,8 +5,8 @@ interface IStateProps {
 }
 
 export const Card = styled.article<React.ComponentProps<"article"> & IStateProps>`
-  background: linear-gradient(${(props) => `${props.theme["bg-light"]}, ${props.theme.bg}`});
-  border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["highlight"]};
+  background: linear-gradient(${(props) => `${props.theme.bg_light}, ${props.theme.bg}`});
+  border-top: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme["highlight"]};
   border-radius: ${(props) => props.theme.radii.lg};
   display: flex;
   gap: ${(props) => props.theme.spacing.md};
@@ -24,8 +24,8 @@ export const Grip = styled.div`
 
   svg {
     color: ${(props) => props.theme.text};
-    height: ${(props) => props.theme.sizes.iconSm};
-    width: ${(props) => props.theme.sizes.iconSm};
+    height: ${(props) => props.theme.sizes.icon_sm};
+    width: ${(props) => props.theme.sizes.icon_sm};
   }
 `;
 
@@ -55,16 +55,16 @@ export const TitleGroup = styled.div`
 
 export const IconWrapper = styled.div<IStateProps>`
   align-items: center;
-  background-color: ${(props) => props.theme["bg-dark"]};
-  border: ${(props) => props.theme["border-widths"].thin} solid
+  background-color: ${(props) => props.theme.bg_dark};
+  border: ${(props) => props.theme.border_widths.thin} solid
     ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
   border-radius: ${(props) => props.theme.radii.md};
   color: ${(props) => (props.$state === "running" ? props.theme.success : props.theme.danger)};
   display: flex;
   flex-shrink: 0;
-  height: ${(props) => props.theme.sizes.iconLg};
+  height: ${(props) => props.theme.sizes.icon_lg};
   justify-content: center;
-  width: ${(props) => props.theme.sizes.iconLg};
+  width: ${(props) => props.theme.sizes.icon_lg};
 `;
 
 export const TitleText = styled.div`
@@ -76,7 +76,7 @@ export const TitleText = styled.div`
 
 export const Name = styled.strong`
   color: ${(props) => props.theme.text};
-  font-size: ${(props) => props.theme["font-sizes"].md};
+  font-size: ${(props) => props.theme.font_sizes.md};
   font-weight: 700;
   line-height: 1.1;
   overflow: hidden;
@@ -85,8 +85,8 @@ export const Name = styled.strong`
 `;
 
 export const Image = styled.span`
-  color: ${(props) => props.theme["text-muted"]};
-  font-size: ${(props) => props.theme["font-sizes"].sm};
+  color: ${(props) => props.theme.text_muted};
+  font-size: ${(props) => props.theme.font_sizes.sm};
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -113,7 +113,7 @@ export const StatusDot = styled.span<IStateProps>`
 `;
 
 export const Metrics = styled.div`
-  border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["border-muted"]};
+  border-top: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme.border_muted};
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
@@ -130,20 +130,20 @@ export const Metric = styled.div`
   text-align: center;
 
   & + & {
-    border-left: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["border-muted"]};
+    border-left: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme.border_muted};
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.compact}px) {
     & + & {
       border-left: none;
-      border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme["border-muted"]};
+      border-top: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme.border_muted};
     }
   }
 `;
 
 export const MetricLabel = styled.span`
-  color: ${(props) => props.theme["text-muted"]};
-  font-size: ${(props) => props.theme["font-sizes"].xs};
+  color: ${(props) => props.theme.text_muted};
+  font-size: ${(props) => props.theme.font_sizes.xs};
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -151,6 +151,6 @@ export const MetricLabel = styled.span`
 
 export const MetricValue = styled.strong`
   color: ${(props) => props.theme.text};
-  font-size: ${(props) => props.theme["font-sizes"].sm};
+  font-size: ${(props) => props.theme.font_sizes.sm};
   font-weight: 700;
 `;

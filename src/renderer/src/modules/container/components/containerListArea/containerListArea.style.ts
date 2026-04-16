@@ -7,21 +7,20 @@ export const Cards = styled.div`
 `;
 
 export const Placeholder = styled.div`
-  color: ${(props) => props.theme["text-muted"]};
-  font-size: ${(props) => props.theme["font-sizes"].sm};
+  color: ${(props) => props.theme.text_muted};
+  font-size: ${(props) => props.theme.font_sizes.sm};
   text-align: center;
   padding: ${(props) => props.theme.spacing.lg};
 `;
 
-
 export const Badge = styled.span`
   align-items: center;
   background-color: ${(props) => props.theme.bg};
-  border: ${(props) => props.theme["border-widths"].thin} solid;
+  border: ${(props) => props.theme.border_widths.thin} solid;
   border-radius: ${(props) => props.theme.radii.pill};
-  color: ${(props) => props.theme["text-muted"]};
+  color: ${(props) => props.theme.text_muted};
   display: inline-flex;
-  font-size: ${(props) => props.theme["font-sizes"].sm};
+  font-size: ${(props) => props.theme.font_sizes.sm};
   font-weight: 700;
   height: ${(props) => props.theme.sizes.badge};
   justify-content: center;

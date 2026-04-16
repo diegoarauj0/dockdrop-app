@@ -44,4 +44,4 @@ class ContainerMetricsService {
   }
 }
 
-export const containerMetricsService = new ContainerMetricsService()
+export const containerMetricsService = new ContainerMetricsService();

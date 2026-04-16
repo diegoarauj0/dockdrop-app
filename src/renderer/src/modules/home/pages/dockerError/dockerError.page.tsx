@@ -1,8 +1,15 @@
-import * as S from "./dockerError.style";
+import { usePingQuery } from "../../../docker/queries/usePing.query";
 import { useTranslation } from "react-i18next";
+import * as S from "./dockerError.style";
+import { Navigate } from "react-router";
 
 export function DockerErrorPage(): React.ReactNode {
   const { t } = useTranslation("home");
+  const { data } = usePingQuery();
+
+  if (data) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <S.ErrorContainer>

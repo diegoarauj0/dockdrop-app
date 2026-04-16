@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { useMutationSetSetting } from "../queries/useMutationSetSetting";
-import { useSettingsQuery } from "../queries/useSettingsQuery";
-import * as SettingCard from "../settingCardStyle";
+import { useMutationSetSetting } from "../queries/useSetSetting.mutation";
+import { useSettingsQuery } from "../queries/useSettings.query";
+import * as SettingCard from "../settingCard.style";
 import { Languages } from "lucide-react";
 import { ReactNode } from "react";
 

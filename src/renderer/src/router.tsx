@@ -1,6 +1,6 @@
-import { DockerErrorPage } from "./modules/home/pages/dockerError/dockerError";
-import { DashboardPage } from "./modules/home/pages/dashboard/dashboard";
-import { SettingsPage } from "./modules/settings/pages/settings/settings";
+import { DockerErrorPage } from "./modules/home/pages/dockerError/dockerError.page";
+import { DashboardPage } from "./modules/home/pages/dashboard/dashboard.page";
+import { SettingsPage } from "./modules/settings/pages/settings/settings.page";
 import { createBrowserRouter, Navigate } from "react-router";
 import { AppLayout } from "./modules/shared/layouts/app/app";
 

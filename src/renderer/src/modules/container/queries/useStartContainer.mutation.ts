@@ -3,7 +3,7 @@ import { dockerClient } from "../../docker/docker.client";
 import { ContainerInfo } from "dockerode";
 
 type UseStartContainerMutationResultType = UseMutationResult<
-  { result: boolean; error?: string },
+  boolean,
   unknown,
   string,
   { previewContainers: ContainerInfo[] | undefined }

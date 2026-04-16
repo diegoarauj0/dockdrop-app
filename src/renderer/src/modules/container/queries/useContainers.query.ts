@@ -16,8 +16,7 @@ export function useContainersQuery(): UseQueryResult<InterfaceUseContainers> {
 
     refetchIntervalInBackground: false,
 
-    select: (response) => {
-      const containers = response.data || [];
+    select: (containers) => {
       return {
         activeContainers: containers.filter(({ State }) => State === "running"),
         inactiveContainers: containers.filter(({ State }) => State === "exited"),

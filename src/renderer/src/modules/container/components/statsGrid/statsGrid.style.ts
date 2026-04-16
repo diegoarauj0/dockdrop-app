@@ -12,10 +12,10 @@ export const StatsGrid = styled.div`
 `;
 
 export const StatCard = styled.article<{ $last: boolean }>`
-  background: linear-gradient(${(props) => `${props.theme["bg-light"]}, ${props.theme.bg}`});
-  border-top: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.highlight};
+  background: linear-gradient(${(props) => `${props.theme.bg_light}, ${props.theme.bg}`});
+  border-top: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme.highlight};
   border-radius: ${(props) => props.theme.radii.lg};
-  min-height: ${(props) => props.theme.sizes["stat-card-min-height"]};
+  min-height: ${(props) => props.theme.sizes.stat_card_min_height};
   padding: ${(props) => props.theme.spacing.md} ${(props) => props.theme.spacing.lg};
   display: flex;
   flex-direction: column;
@@ -38,16 +38,16 @@ export const StatHeader = styled.div`
 export const StatIcon = styled.div<{
   $accent: "primary" | "success" | "danger";
 }>`
-  background-color: ${(props) => props.theme["bg-dark"]};
-  border: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme[props.$accent]};
+  background-color: ${(props) => props.theme.bg_dark};
+  border: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme[props.$accent]};
   border-radius: ${(props) => props.theme.radii.md};
   color: ${(props) => props.theme[props.$accent]};
   display: flex;
   align-items: center;
   justify-content: center;
   padding: ${(props) => props.theme.spacing.xs};
-  height: ${(props) => props.theme.sizes.iconLg};
-  width: ${(props) => props.theme.sizes.iconLg};
+  height: ${(props) => props.theme.sizes.icon_lg};
+  width: ${(props) => props.theme.sizes.icon_lg};
   box-shadow: 0 0 ${(props) => props.theme.spacing.xxs} ${(props) => props.theme[props.$accent]};
 
   svg {
@@ -57,8 +57,8 @@ export const StatIcon = styled.div<{
 `;
 
 export const StatHighlight = styled.span`
-  color: ${(props) => props.theme["text-muted"]};
-  font-size: ${(props) => props.theme["font-sizes"].sm};
+  color: ${(props) => props.theme.text_muted};
+  font-size: ${(props) => props.theme.font_sizes.sm};
   font-weight: 700;
   letter-spacing: 0.03em;
   text-align: right;
@@ -72,14 +72,14 @@ export const StatBody = styled.div`
 `;
 
 export const StatLabel = styled.span`
-  color: ${(props) => props.theme["text-muted"]};
-  font-size: ${(props) => props.theme["font-sizes"].md};
+  color: ${(props) => props.theme.text_muted};
+  font-size: ${(props) => props.theme.font_sizes.md};
   font-weight: 600;
 `;
 
 export const StatValue = styled.strong`
   color: ${(props) => props.theme.text};
-  font-size: ${(props) => props.theme["font-sizes"].xxl};
+  font-size: ${(props) => props.theme.font_sizes.xxl};
   font-weight: 800;
   letter-spacing: -0.04em;
 `;

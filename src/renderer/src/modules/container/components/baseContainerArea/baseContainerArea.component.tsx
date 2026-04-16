@@ -26,7 +26,7 @@ export function BaseContainerAreaComponent(props: InterfaceBaseContainerAreaProp
       <S.Header>
         <S.Title>{title}</S.Title>
 
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <S.RightContentWrapper>
           {rightContent}
 
           {Icon && (
@@ -34,7 +34,7 @@ export function BaseContainerAreaComponent(props: InterfaceBaseContainerAreaProp
               <Icon size={20} />
             </S.IconWrapper>
           )}
-        </div>
+        </S.RightContentWrapper>
       </S.Header>
 
       {children}

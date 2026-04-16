@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Settings = styled.div`
-  background: ${({ theme }) => theme["bg-dark"]};
+  background: ${({ theme }) => theme.bg_dark};
   padding: ${({ theme }) => theme.spacing.xl};
   justify-content: center;
   display: flex;
@@ -11,7 +11,7 @@ export const Settings = styled.div`
 
 export const SettingsContainer = styled.div`
   display: flex;
-  max-width: ${({ theme }) => theme.sizes["content-max-width"]};
+  max-width: ${({ theme }) => theme.sizes.content_max_width};
   width: 100%;
   flex-direction: column;
   align-items: center;
@@ -19,7 +19,7 @@ export const SettingsContainer = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: ${({ theme }) => theme["font-sizes"].xxl};
+  font-size: ${({ theme }) => theme.font_sizes.xxl};
   font-weight: 700;
   width: 100%;
   color: ${({ theme }) => theme.text};

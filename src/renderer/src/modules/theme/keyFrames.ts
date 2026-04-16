@@ -29,4 +29,4 @@ export const slideUpFadeAnimation = keyframes`
     opacity: 1;
     transform: translateY(0);
   }
-`
+`;

@@ -1,4 +1,4 @@
-import { usePingQuery } from "../queries/usePingQuery";
+import { usePingQuery } from "../queries/usePing.query";
 import { DockerContext } from "./docker.context";
 import { Navigate } from "react-router";
 import { ReactNode } from "react";
@@ -10,9 +10,9 @@ export function DockerProvider({ children }: { children: ReactNode }): React.Rea
     return <div>Loading...</div>;
   }
 
-  if (!data?.success) {
+  if (!data) {
     return <Navigate to="/docker-error" replace />;
   }
 
-  return <DockerContext.Provider value={{ isAvailable: data.success }}>{children}</DockerContext.Provider>;
+  return <DockerContext.Provider value={{ isAvailable: data }}>{children}</DockerContext.Provider>;
 }

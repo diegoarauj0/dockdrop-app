@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
 export const SearchWrapper = styled.label`
-  background-color: ${(props) => props.theme["bg-light"]};
-  border: ${(props) => props.theme["border-widths"].thin} solid ${(props) => props.theme.border};
+  background-color: ${(props) => props.theme.bg_light};
+  border: ${(props) => props.theme.border_widths.thin} solid ${(props) => props.theme.border};
   border-radius: ${(props) => props.theme.radii.pill};
-  color: ${(props) => props.theme["text-muted"]};
-  max-width: ${(props) => props.theme.sizes["content-max-width"]};
+  color: ${(props) => props.theme.text_muted};
+  max-width: ${(props) => props.theme.sizes.content_max_width};
   width: 100%;
   display: flex;
   align-items: center;
   gap: ${(props) => props.theme.spacing.xs};
-  min-height: ${(props) => props.theme.sizes["control-min-height"]};
+  min-height: ${(props) => props.theme.sizes.control_min_height};
   padding: 0 ${(props) => props.theme.spacing.md};
   transition:
     border-color 0.2s ease,
@@ -28,10 +28,10 @@ export const SearchInput = styled.input`
   border: none;
   width: 100%;
   color: ${(props) => props.theme.text};
-  font-size: ${(props) => props.theme["font-sizes"].lg};
+  font-size: ${(props) => props.theme.font_sizes.lg};
   outline: none;
 
   &::placeholder {
-    color: ${(props) => props.theme["text-muted"]};
+    color: ${(props) => props.theme.text_muted};
   }
 `;

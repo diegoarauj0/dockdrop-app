@@ -1,12 +1,12 @@
 {
   "shared": {
-      "shared_sidebar": {
-    "dashboard": "Painel",
-    "settings": "Configurações"
-  },
-  "shared_confirm_dialog": {
-    "confirm": "Confirmar",
-    "cancel": "Cancelar"
-  }
+    "shared_sidebar": {
+      "dashboard": "Painel",
+      "settings": "Configurações"
+    },
+    "shared_confirm_dialog": {
+      "confirm": "Confirmar",
+      "cancel": "Cancelar"
+    }
   }
 }

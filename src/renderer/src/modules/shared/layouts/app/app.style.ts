@@ -5,7 +5,7 @@ type SidebarStateProps = {
 };
 
 export const AppLayout = styled.main`
-  background-color: ${(props) => props.theme["bg-dark"]};
+  background-color: ${(props) => props.theme.bg_dark};
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -23,7 +23,7 @@ export const SidebarContent = styled.div<SidebarStateProps>`
   min-height: 100vh;
   padding: ${(props) => props.theme.spacing.xs};
   transition: width 0.2s ease;
-  width: ${(props) => (props.$isCollapsed ? props.theme.sizes["sidebar-collapsed-width"] : props.theme.sizes["sidebar-width"])};
+  width: ${(props) => (props.$isCollapsed ? props.theme.sizes.sidebar_collapsed_width : props.theme.sizes.sidebar_width)};
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
     min-height: 0px;
@@ -37,7 +37,7 @@ export const SidebarContent = styled.div<SidebarStateProps>`
 export const MainContent = styled.div<SidebarStateProps>`
   transition: width 0.2s ease;
   width: ${(props) =>
-    `calc(100vw - ${props.$isCollapsed ? props.theme.sizes["sidebar-collapsed-width"] : props.theme.sizes["sidebar-width"]})`};
+    `calc(100vw - ${props.$isCollapsed ? props.theme.sizes.sidebar_collapsed_width : props.theme.sizes.sidebar_width})`};
   padding: ${(props) => props.theme.spacing.xs} ${(props) => props.theme.spacing.md};
   overflow-y: scroll;
   height: 100vh;
