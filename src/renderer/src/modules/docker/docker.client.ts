@@ -1,5 +1,27 @@
 import { ContainerInfo, ContainerStats } from "dockerode";
 
+export interface InterfaceCreateContainer {
+  image: string;
+  name?: string;
+  ports?: InterfaceCreateContainerPort[];
+  envs?: InterfaceCreateContainerEnv[];
+}
+
+export interface InterfaceDockerImagePayload {
+  image: string;
+}
+
+interface InterfaceCreateContainerPort {
+  hostPort: string | number;
+  containerPort: string | number;
+  protocol?: "tcp" | "udp" | "sctp";
+}
+
+interface InterfaceCreateContainerEnv {
+  key: string;
+  value: string;
+}
+
 export class DockerClient {
   public readonly isDev = import.meta.env.MODE === "development";
 
@@ -59,6 +81,36 @@ export class DockerClient {
       console.log(`[${new Date().toISOString()}] [DockerClient] stopContainer => success: ${JSON.stringify(result)}`);
 
     if (!result.success) throw new Error(result.error);
+
+    return result.success;
+  }
+
+  public async createContainer(payload: InterfaceCreateContainer): Promise<boolean> {
+    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] createContainer ${JSON.stringify(payload)}`);
+
+    const result = await window.electron.ipcRenderer.invoke("docker:create_container", payload);
+    if (this.isDev)
+      console.log(`[${new Date().toISOString()}] [DockerClient] createContainer => success: ${JSON.stringify(result)}`);
+
+    if (!result.success) throw new Error(result.error);
+
+    return result.success;
+  }
+
+  public async hasImage(payload: InterfaceDockerImagePayload): Promise<boolean> {
+    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] hasImage ${JSON.stringify(payload)}`);
+
+    const result = await window.electron.ipcRenderer.invoke("docker:has_image", payload);
+    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] hasImage => success: ${JSON.stringify(result)}`);
+
+    return result.success;
+  }
+
+  public async pullImage(payload: InterfaceDockerImagePayload): Promise<boolean> {
+    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] pullImage ${JSON.stringify(payload)}`);
+
+    const result = await window.electron.ipcRenderer.invoke("docker:pull_image", payload);
+    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] pullImage => success: ${JSON.stringify(result)}`);
 
     return result.success;
   }

@@ -27,8 +27,9 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
   const { currentTheme } = useTheme();
   const { t } = useTranslation("container");
 
+  const isInactiveContainer = ({ State }: ContainerInfo): boolean => ["created", "exited"].includes(State);
   const activeContainers = containers.filter(({ State }) => State === "running");
-  const inactiveContainers = containers.filter(({ State }) => State === "exited");
+  const inactiveContainers = containers.filter(isInactiveContainer);
 
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [containerToDelete, setContainerToDelete] = useState<InterfaceContainerData | null>(null);
@@ -45,7 +46,7 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
       const targetArea = over.id;
 
       if (containerData.currentState === "running" && targetArea === "active-area") return;
-      if (containerData.currentState === "exited" && targetArea === "inactive-area") return;
+      if (["created", "exited"].includes(containerData.currentState) && targetArea === "inactive-area") return;
 
       if (targetArea === "active-area") {
         toast.loading(t("notifications.activating", { name: containerData.containerName }), {

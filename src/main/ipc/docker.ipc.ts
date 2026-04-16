@@ -1,4 +1,4 @@
-import { DockerService } from "../service/docker.service";
+import { DockerService, InterfaceCreateContainer, InterfaceDockerImagePayload } from "../service/docker.service";
 import { ipcMain } from "electron";
 
 const dockerService = new DockerService();
@@ -22,5 +22,17 @@ export function registerDockerodeIpc(): void {
 
   ipcMain.handle("docker:stop_container", async (_, containerId: string) => {
     return dockerService.stopContainer(containerId);
+  });
+
+  ipcMain.handle("docker:create_container", async (_, payload: InterfaceCreateContainer) => {
+    return dockerService.createContainer(payload);
+  });
+
+  ipcMain.handle("docker:has_image", async (_, payload: InterfaceDockerImagePayload) => {
+    return dockerService.hasImage(payload);
+  });
+
+  ipcMain.handle("docker:pull_image", async (_, payload: InterfaceDockerImagePayload) => {
+    return dockerService.pullImage(payload);
   });
 }

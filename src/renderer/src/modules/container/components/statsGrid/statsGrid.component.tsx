@@ -1,4 +1,4 @@
-import { useContainerStats } from "../../providers/containerStats.context";
+import { useContainerStats } from "../../providers/containerStats/containerStats.context";
 import { containerMetricsService } from "../../containerMetrics.service";
 import { useContainersQuery } from "../../queries/useContainers.query";
 import { Activity, Box, Pause } from "lucide-react";

@@ -1,4 +1,3 @@
-import { ContainerStatsProvider } from "./modules/container/providers/containerStats.provider";
 import { LanguageProvider } from "./modules/language/providers/language.provider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "./modules/theme/providers/theme.provider";
@@ -15,10 +14,8 @@ function App(): React.ReactNode {
       <ThemeProvider>
         <SettingsProvider>
           <LanguageProvider>
-            <ContainerStatsProvider>
-              <GlobalStyle />
-              <RouterProvider router={router} />
-            </ContainerStatsProvider>
+            <GlobalStyle />
+            <RouterProvider router={router} />
           </LanguageProvider>
         </SettingsProvider>
       </ThemeProvider>

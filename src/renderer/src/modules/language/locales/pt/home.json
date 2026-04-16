@@ -5,6 +5,20 @@
       "new_container": "Novo Container",
       "search": "Buscar containers..."
     },
+    "home_create_container": {
+      "title": "Criar Novo Container",
+      "complete": "Concluir Configuração",
+      "blueprint": "Blueprint do Container",
+      "available_modules": "Módulos Disponíveis",
+      "available_modules_description": "Arraste módulos para o container para configurar.",
+      "required_module": "O módulo {{module}} é obrigatório.",
+      "creating_container": "Criando container...",
+      "image_not_found_downloading": "Não foi possivel encontrar {{image}} localmente, baixando imagem da rede...",
+      "image_download_failed": "Não foi possivel baixar essa imagem.",
+      "image_download_success": "Imagem foi baixada com sucesso.",
+      "container_created_success": "Container foi criado com sucesso.",
+      "container_creation_failed": "Não foi possivel criar o container."
+    },
     "home_docker_error": {
       "title": "Não foi possível acessar o Docker",
       "message": "Certifique-se de que o Docker está instalado e em execução, ou verifique se seu usuário está no grupo docker."

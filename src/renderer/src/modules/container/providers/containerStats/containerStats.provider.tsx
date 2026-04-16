@@ -1,6 +1,6 @@
-import { dockerClient } from "../../docker/docker.client";
+import { dockerClient } from "../../../docker/docker.client";
 import { PropsWithChildren, ReactNode, useEffect, useState } from "react";
-import { useContainersQuery } from "../queries/useContainers.query";
+import { useContainersQuery } from "../../queries/useContainers.query";
 import { ContainerStatsContext } from "./containerStats.context";
 import { ContainerStats } from "dockerode";
 

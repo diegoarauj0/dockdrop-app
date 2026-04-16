@@ -1,4 +1,4 @@
-import { useContainerStats } from "../../providers/containerStats.context";
+import { useContainerStats } from "../../providers/containerStats/containerStats.context";
 import { CSSProperties } from "styled-components";
 import { Box, GripVertical } from "lucide-react";
 import * as S from "./containerCard.style";

@@ -17,9 +17,11 @@ export function useContainersQuery(): UseQueryResult<InterfaceUseContainers> {
     refetchIntervalInBackground: false,
 
     select: (containers) => {
+      const isInactiveContainer = ({ State }: ContainerInfo): boolean => ["created", "exited"].includes(State);
+
       return {
         activeContainers: containers.filter(({ State }) => State === "running"),
-        inactiveContainers: containers.filter(({ State }) => State === "exited"),
+        inactiveContainers: containers.filter(isInactiveContainer),
         containers: containers,
       };
     },
