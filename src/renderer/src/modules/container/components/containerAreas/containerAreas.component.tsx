@@ -12,6 +12,7 @@ import { ReactNode, useState } from "react";
 import { Trash2, Info } from "lucide-react";
 import { ContainerInfo } from "dockerode";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 interface InterfaceContainerData {
   containerId: string;
@@ -26,6 +27,7 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
 
   const { currentTheme } = useTheme();
   const { t } = useTranslation("container");
+  const navigate = useNavigate();
 
   const isInactiveContainer = ({ State }: ContainerInfo): boolean => ["created", "exited"].includes(State);
   const activeContainers = containers.filter(({ State }) => State === "running");
@@ -105,6 +107,11 @@ export function ContainerAreasComponent({ containers }: { containers: ContainerI
       if (targetArea === "delete-area") {
         setContainerToDelete(containerData);
         setShowDeleteDialog(true);
+        return;
+      }
+
+      if (targetArea === "inspect-area") {
+        navigate(`/containers/${containerData.containerId}`, { replace: true });
         return;
       }
     }

@@ -35,4 +35,8 @@ export function registerDockerodeIpc(): void {
   ipcMain.handle("docker:pull_image", async (_, payload: InterfaceDockerImagePayload) => {
     return dockerService.pullImage(payload);
   });
+
+  ipcMain.handle("docker:inspect_container", async (_, containerId: string) => {
+    return dockerService.getContainerDetails(containerId);
+  });
 }

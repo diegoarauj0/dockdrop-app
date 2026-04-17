@@ -1,4 +1,4 @@
-import { ContainerInfo, ContainerStats } from "dockerode";
+import { ContainerInfo, ContainerInspectInfo, ContainerStats } from "dockerode";
 
 export interface InterfaceCreateContainer {
   image: string;
@@ -113,6 +113,19 @@ export class DockerClient {
     if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] pullImage => success: ${JSON.stringify(result)}`);
 
     return result.success;
+  }
+
+  public async inspectContainer(containerId: string): Promise<ContainerInspectInfo> {
+    if (this.isDev)
+      console.log(`[${new Date().toISOString()}] [DockerClient] inspectContainer ${JSON.stringify({ containerId })}`);
+
+    const result = await window.electron.ipcRenderer.invoke("docker:inspect_container", containerId);
+    if (this.isDev)
+      console.log(`[${new Date().toISOString()}] [DockerClient] inspectContainer => success: ${JSON.stringify(result)}`);
+
+    if (!result.success) throw new Error(result.error);
+
+    return result.data;
   }
 
   public startStats(ids: string[]): void {

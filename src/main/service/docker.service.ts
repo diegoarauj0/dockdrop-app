@@ -147,6 +147,15 @@ export class DockerService {
     });
   }
 
+  public async getContainerDetails(containerId: string): Promise<InterfaceSafeExecute<unknown>> {
+    this.logger("getContainerDetails", { containerId });
+
+    return this.safeExecute(async () => {
+      const container = this.docker.getContainer(containerId);
+      return container.inspect();
+    });
+  }
+
   private buildExposedPorts(ports?: InterfaceCreateContainerPort[]): Record<string, Record<string, string>> | undefined {
     if (!ports?.length) return undefined;
 
@@ -156,7 +165,17 @@ export class DockerService {
   private buildPortBindings(ports?: InterfaceCreateContainerPort[]): NonNullable<Docker.HostConfig["PortBindings"]> | undefined {
     if (!ports?.length) return undefined;
 
-    return Object.fromEntries(ports.map((port) => [this.getPortKey(port), [{ HostPort: String(port.hostPort) }]]));
+    return Object.fromEntries(
+      ports.map((port) => [
+        this.getPortKey(port),
+        [
+          {
+            HostPort: String(port.hostPort),
+            HostIp: "0.0.0.0",
+          },
+        ],
+      ]),
+    );
   }
 
   private getPortKey({ containerPort, protocol = "tcp" }: InterfaceCreateContainerPort): string {

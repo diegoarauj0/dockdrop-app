@@ -11,6 +11,12 @@ export const Card = styled.article<React.ComponentProps<"article"> & IStateProps
   display: flex;
   gap: ${(props) => props.theme.spacing.md};
   padding: ${(props) => props.theme.spacing.md};
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   @media (max-width: ${(props) => props.theme.breakpoints.compact}px) {
     flex-direction: column;

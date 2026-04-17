@@ -2,6 +2,7 @@ import { CreateContainerPageComponent } from "./modules/home/pages/createContain
 import { DockerErrorPage } from "./modules/home/pages/dockerError/dockerError.page";
 import { DashboardPage } from "./modules/home/pages/dashboard/dashboard.page";
 import { SettingsPage } from "./modules/settings/pages/settings/settings.page";
+import { ContainerDetailsPage } from "./modules/home/pages/containerDetails/containerDetails.page";
 import { createBrowserRouter, Navigate } from "react-router";
 import { AppLayout } from "./modules/shared/layouts/app/app.layout";
 
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         element: <CreateContainerPageComponent />,
         path: "/containers/new",
+      },
+      {
+        element: <ContainerDetailsPage />,
+        path: "/containers/:containerId",
       },
     ],
   },
