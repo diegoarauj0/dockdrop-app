@@ -1,42 +1,34 @@
-import { DockerService, InterfaceCreateContainer, InterfaceDockerImagePayload } from "../service/docker.service";
-import { ipcMain } from "electron";
+import { dockerController } from "../controllers/docker.controller";
+import { BrowserWindow, ipcMain } from "electron";
+import { IpcWrapper } from "../ipcWrapper";
 
-const dockerService = new DockerService();
+export function registerDockerodeIpc(win: BrowserWindow): void {
+  ipcMain.handle("docker:ping", IpcWrapper.wrap(dockerController.ping));
 
-export function registerDockerodeIpc(): void {
-  ipcMain.handle("docker:ping", async () => {
-    return dockerService.ping();
-  });
+  ipcMain.handle("docker:list_containers", IpcWrapper.wrap(dockerController.listContainers));
 
-  ipcMain.handle("docker:list_containers", async () => {
-    return dockerService.listContainers();
-  });
+  ipcMain.handle("docker:delete_container", IpcWrapper.wrap(dockerController.deleteContainer));
 
-  ipcMain.handle("docker:delete_container", async (_, containerId: string) => {
-    return dockerService.deleteContainer(containerId);
-  });
+  ipcMain.handle("docker:start_container", IpcWrapper.wrap(dockerController.startContainer));
 
-  ipcMain.handle("docker:start_container", async (_, containerId: string) => {
-    return dockerService.startContainer(containerId);
-  });
+  ipcMain.handle("docker:stop_container", IpcWrapper.wrap(dockerController.stopContainer));
 
-  ipcMain.handle("docker:stop_container", async (_, containerId: string) => {
-    return dockerService.stopContainer(containerId);
-  });
+  ipcMain.handle("docker:create_container", IpcWrapper.wrap(dockerController.createContainer));
 
-  ipcMain.handle("docker:create_container", async (_, payload: InterfaceCreateContainer) => {
-    return dockerService.createContainer(payload);
-  });
+  ipcMain.handle("docker:pull_image", IpcWrapper.wrap(dockerController.pullImage));
 
-  ipcMain.handle("docker:has_image", async (_, payload: InterfaceDockerImagePayload) => {
-    return dockerService.hasImage(payload);
-  });
+  ipcMain.handle("docker:get_image", IpcWrapper.wrap(dockerController.getImage));
 
-  ipcMain.handle("docker:pull_image", async (_, payload: InterfaceDockerImagePayload) => {
-    return dockerService.pullImage(payload);
-  });
+  ipcMain.handle("docker:get_container_details", IpcWrapper.wrap(dockerController.getContainerDetails));
 
-  ipcMain.handle("docker:inspect_container", async (_, containerId: string) => {
-    return dockerService.getContainerDetails(containerId);
-  });
+  ipcMain.on(
+    "stats:start",
+    IpcWrapper.wrap(async (_: unknown, ids: string[]) =>
+      dockerController.statsStart(_, ids, (values) => {
+        win.webContents.send("stats:batch", Array.from(values));
+      }),
+    ),
+  );
+
+  ipcMain.on("stats:stop", IpcWrapper.wrap(dockerController.stopContainer));
 }

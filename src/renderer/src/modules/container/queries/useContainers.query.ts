@@ -13,9 +13,6 @@ export function useContainersQuery(): UseQueryResult<InterfaceUseContainers> {
     queryKey: ["docker-containers"],
     queryFn: () => dockerClient.listContainers(),
     refetchInterval: 3000,
-
-    refetchIntervalInBackground: false,
-
     select: (containers) => {
       const isInactiveContainer = ({ State }: ContainerInfo): boolean => ["created", "exited"].includes(State);
 

@@ -1,14 +1,10 @@
-import { ContainerInfo, ContainerInspectInfo, ContainerStats } from "dockerode";
+import { ContainerInfo, ContainerInspectInfo, ContainerStats, ImageInspectInfo } from "dockerode";
 
 export interface InterfaceCreateContainer {
   image: string;
   name?: string;
   ports?: InterfaceCreateContainerPort[];
   envs?: InterfaceCreateContainerEnv[];
-}
-
-export interface InterfaceDockerImagePayload {
-  image: string;
 }
 
 interface InterfaceCreateContainerPort {
@@ -25,125 +21,125 @@ interface InterfaceCreateContainerEnv {
 export class DockerClient {
   public readonly isDev = import.meta.env.MODE === "development";
 
-  public async ping(): Promise<boolean> {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] ping`);
+  public async ping(): Promise<true> {
+    this.logger("ping");
 
     const result = await window.electron.ipcRenderer.invoke("docker:ping");
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] ping => success: ${JSON.stringify(result)}`);
+    this.logger("ping => result", result);
 
-    if (!result.success) throw new Error(result.error);
+    if (!result.success) throw result.error;
 
-    return result.success;
+    return true;
   }
 
   public async listContainers(): Promise<ContainerInfo[]> {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] listContainers`);
+    this.logger("listContainers");
 
     const result = await window.electron.ipcRenderer.invoke("docker:list_containers");
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] listContainers => success: ${JSON.stringify(result)}`);
+    this.logger("listContainers => result", result);
 
-    if (!result.success) throw new Error(result.error);
+    if (!result.success) throw result.error;
 
     return result.data || [];
   }
 
   public async deleteContainer(containerId: string): Promise<boolean> {
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] deleteContainer ${JSON.stringify({ containerId })}`);
+    this.logger("deleteContainer", { containerId });
 
     const result = await window.electron.ipcRenderer.invoke("docker:delete_container", containerId);
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] deleteContainer => success: ${JSON.stringify(result)}`);
+    this.logger("deleteContainer => result", result);
 
-    if (!result.success) throw new Error(result.error);
+    if (!result.success) throw result.error;
 
     return result.success;
   }
 
   public async startContainer(containerId: string): Promise<boolean> {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] startContainer ${JSON.stringify({ containerId })}`);
+    this.logger("startContainer", { containerId });
 
     const result = await window.electron.ipcRenderer.invoke("docker:start_container", containerId);
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] startContainer => success: ${JSON.stringify(result)}`);
+    this.logger("startContainer => result", result);
 
-    if (!result.success) throw new Error(result.error);
+    if (!result.success) throw result.error;
 
     return result.success;
   }
 
   public async stopContainer(containerId: string): Promise<boolean> {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] stopContainer ${JSON.stringify({ containerId })}`);
+    this.logger("stopContainer", { containerId });
 
     const result = await window.electron.ipcRenderer.invoke("docker:stop_container", containerId);
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] stopContainer => success: ${JSON.stringify(result)}`);
+    this.logger("stopContainer => result", result);
 
-    if (!result.success) throw new Error(result.error);
+    if (!result.success) throw result.error;
 
     return result.success;
   }
 
   public async createContainer(payload: InterfaceCreateContainer): Promise<boolean> {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] createContainer ${JSON.stringify(payload)}`);
+    this.logger("createContainer", payload);
 
     const result = await window.electron.ipcRenderer.invoke("docker:create_container", payload);
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] createContainer => success: ${JSON.stringify(result)}`);
+    this.logger("createContainer", result);
 
-    if (!result.success) throw new Error(result.error);
-
-    return result.success;
-  }
-
-  public async hasImage(payload: InterfaceDockerImagePayload): Promise<boolean> {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] hasImage ${JSON.stringify(payload)}`);
-
-    const result = await window.electron.ipcRenderer.invoke("docker:has_image", payload);
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] hasImage => success: ${JSON.stringify(result)}`);
+    if (!result.success) throw result.error;
 
     return result.success;
   }
 
-  public async pullImage(payload: InterfaceDockerImagePayload): Promise<boolean> {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] pullImage ${JSON.stringify(payload)}`);
+  public async getImage(image: string): Promise<ImageInspectInfo> {
+    this.logger("getImage", { image });
 
-    const result = await window.electron.ipcRenderer.invoke("docker:pull_image", payload);
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] pullImage => success: ${JSON.stringify(result)}`);
+    const result = await window.electron.ipcRenderer.invoke("docker:get_image", image);
+    this.logger("getImage => result", result);
 
-    return result.success;
+    if (!result.success) throw result.error;
+
+    return result.data;
+  }
+
+  public async pullImage(image: string): Promise<void> {
+    this.logger("pullImage", { image });
+
+    const result = await window.electron.ipcRenderer.invoke("docker:pull_image", image);
+    this.logger("getImage => result", result);
+
+    if (!result.success) throw result.error;
   }
 
   public async inspectContainer(containerId: string): Promise<ContainerInspectInfo> {
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] inspectContainer ${JSON.stringify({ containerId })}`);
+    this.logger("inspectContainer", { containerId });
 
     const result = await window.electron.ipcRenderer.invoke("docker:inspect_container", containerId);
-    if (this.isDev)
-      console.log(`[${new Date().toISOString()}] [DockerClient] inspectContainer => success: ${JSON.stringify(result)}`);
+    this.logger("inspectContainer", result);
 
-    if (!result.success) throw new Error(result.error);
+    if (!result.success) throw result.error;
 
     return result.data;
   }
 
   public startStats(ids: string[]): void {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] startStats ${JSON.stringify({ ids })}`);
+    this.logger("startStats", { ids });
 
     window.electron.ipcRenderer.send("stats:start", ids);
   }
 
   public stopStats(ids: string[]): void {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] stopStats ${JSON.stringify({ ids })}`);
+    this.logger("stopStats", { ids });
 
     window.electron.ipcRenderer.send("stats:stop", ids);
   }
 
   public onStatsBatch(callback: (stats: ContainerStats[]) => void): void {
-    if (this.isDev) console.log(`[${new Date().toISOString()}] [DockerClient] onStatsBatch`);
+    this.logger("onStatsBatch");
 
     window.electron.ipcRenderer.on("stats:batch", (_, stats) => callback(stats));
+  }
+
+  private logger(event: string, data?: unknown): void {
+    if (!this.isDev) return;
+
+    console.log(`[${new Date().toISOString()}] [DockerClient] ${event}`, data ?? "");
   }
 }
 

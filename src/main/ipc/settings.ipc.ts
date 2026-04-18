@@ -1,4 +1,4 @@
-import { InterfaceSettings, SettingsService } from "../service/settings.service";
+import { InterfaceSettings, SettingsService } from "../services/settings.service";
 import { ipcMain } from "electron";
 
 const settingsService = new SettingsService();

@@ -73,10 +73,11 @@ export const Title = styled.h1`
   letter-spacing: -0.02em;
 `;
 
-export const CompleteButton = styled.button`
+export const CompleteButton = styled.button<{ $disabled: boolean }>`
   ${actionButtonStyles};
   background-color: ${(props) => props.theme.success};
   color: white;
+  filter: opacity(${props => props.$disabled?"50%":"100%"});
 
   @media screen and (max-width: ${(props) => props.theme.breakpoints.tablet}px) {
     grid-column: 1 / -1;

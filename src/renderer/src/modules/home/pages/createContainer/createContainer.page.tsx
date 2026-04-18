@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AvailableContainerModulesComponent } from "../../../container/components/availableContainerModules/availableContainerModules.component";
 import { SelectedContainerModulesComponent } from "../../../container/components/selectedContainerModules/selectedContainerModules.component";
 import {
@@ -11,12 +12,15 @@ import * as S from "./createContainer.style";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { dockerClient } from "../../../docker/docker.client";
+import { useIsCreatingContainer } from "../../../container/providers/isCreatingContainer/isCreatingContainer.context";
 
 export function CreateContainerPageComponent(): React.ReactNode {
   const { availableContainerModules, selectedContainerModules, setConfigError, setConfigValue, clear, add } =
     useContainerModules();
   const { t } = useTranslation("home");
   const navigate = useNavigate();
+
+  const { isCreatingContainer, set } = useIsCreatingContainer();
 
   const handleDragEnd = (event: DragEndEvent): void => {
     const { active, over } = event;
@@ -36,6 +40,8 @@ export function CreateContainerPageComponent(): React.ReactNode {
   const imageNotFoundNotificationId = "IMAGE_NOT_FOUND_NOTIFICATION";
 
   const handleCreateContainer = async (): Promise<void> => {
+    if (isCreatingContainer) return;
+
     let hasError = false;
 
     selectedContainerModules.forEach(({ config, about, id }) => {
@@ -84,22 +90,23 @@ export function CreateContainerPageComponent(): React.ReactNode {
       };
     });
 
+    set(true);
+
     toast(t("home_create_container.creating_container"), {
       toastId: createContainerNotificationId,
+      position: "top-center",
       isLoading: true,
     });
 
-    if (!(await dockerClient.hasImage({ image }))) {
-      toast(t("home_create_container.image_not_found_downloading", { image }), {
-        toastId: imageNotFoundNotificationId,
-        isLoading: true,
-      });
+    try {
+      await dockerClient.getImage(image);
+    } catch (response: any) {
+      if (response.code !== "IMAGE_NOT_FOUND") {
+        set(false);
 
-      const result = await dockerClient.pullImage({ image });
-
-      if (!result) {
-        return toast.update(imageNotFoundNotificationId, {
-          render: t("home_create_container.image_download_failed"),
+        return toast.update(createContainerNotificationId, {
+          render: t("home_create_container.container_creation_failed"),
+          position: "top-center",
           closeButton: true,
           isLoading: false,
           autoClose: 3000,
@@ -107,13 +114,44 @@ export function CreateContainerPageComponent(): React.ReactNode {
         });
       }
 
-      toast.update(imageNotFoundNotificationId, {
-        render: t("home_create_container.image_download_success"),
-        closeButton: true,
-        isLoading: false,
-        autoClose: 3000,
-        type: "success",
+      toast(t("home_create_container.image_not_found_downloading", { image }), {
+        toastId: imageNotFoundNotificationId,
+        position: "top-center",
+        isLoading: true,
       });
+
+      try {
+        await dockerClient.pullImage(image);
+
+        toast.update(imageNotFoundNotificationId, {
+          render: t("home_create_container.image_download_success"),
+          position: "top-center",
+          closeButton: true,
+          isLoading: false,
+          autoClose: 3000,
+          type: "success",
+        });
+      } catch {
+        set(false);
+
+        toast.update(createContainerNotificationId, {
+          render: t("home_create_container.container_creation_failed"),
+          position: "top-center",
+          closeButton: true,
+          isLoading: false,
+          autoClose: 3000,
+          type: "error",
+        });
+
+        return toast.update(imageNotFoundNotificationId, {
+          render: t("home_create_container.image_download_failed"),
+          position: "top-center",
+          closeButton: true,
+          isLoading: false,
+          autoClose: 3000,
+          type: "error",
+        });
+      }
     }
 
     try {
@@ -121,6 +159,7 @@ export function CreateContainerPageComponent(): React.ReactNode {
 
       toast.update(createContainerNotificationId, {
         render: t("home_create_container.container_created_success"),
+        position: "top-center",
         closeButton: true,
         isLoading: false,
         autoClose: 3000,
@@ -129,12 +168,15 @@ export function CreateContainerPageComponent(): React.ReactNode {
     } catch {
       toast.update(createContainerNotificationId, {
         render: t("home_create_container.container_creation_failed"),
+        position: "top-center",
         closeButton: true,
         isLoading: false,
         autoClose: 3000,
         type: "error",
       });
     }
+
+    set(false);
   };
 
   return (
@@ -154,7 +196,7 @@ export function CreateContainerPageComponent(): React.ReactNode {
           <S.Title>{t("home_create_container.title")}</S.Title>
         </S.HeaderContent>
 
-        <S.CompleteButton type="button" onClick={handleCreateContainer}>
+        <S.CompleteButton type="button" $disabled={isCreatingContainer} onClick={handleCreateContainer}>
           <CheckCircle2 size={18} strokeWidth={2.25} />
           {t("home_create_container.complete")}
         </S.CompleteButton>
