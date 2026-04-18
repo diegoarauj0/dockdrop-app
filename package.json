@@ -8,11 +8,12 @@
     "name": "Diego Araujo"
   },
   "repository": {
-    "url": "https://github.com/diegoarauj0/dockdrop-app.git"
+    "url": "https://github.com/diegoarauj0/dockdrop-app.git",
+    "type": "git"
   },
   "bugs": "https://github.com/diegoarauj0/dockdrop-app/issues",
   "license": "MIT",
-  "homepage": "https://electron-vite.org",
+  "homepage": "https://github.com/diegoarauj0/dockdrop-app#readme",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
