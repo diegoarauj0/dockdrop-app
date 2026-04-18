@@ -1,9 +1,17 @@
 {
   "name": "dockedrop",
   "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "description": "Um app para gerenciar containers docker.",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": {
+    "email": "diegoaraujosantosbr@gmail.com",
+    "name": "Diego Araujo"
+  },
+  "repository": {
+    "url": "https://github.com/diegoarauj0/dockdrop-app.git"
+  },
+  "bugs": "https://github.com/diegoarauj0/dockdrop-app/issues",
+  "license": "MIT",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --write .",

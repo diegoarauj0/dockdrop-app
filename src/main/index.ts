@@ -16,13 +16,23 @@ const MAIN_WINDOW_CONFIG = {
   },
 };
 
+let mainWindow: BrowserWindow | null = null;
+
 function createWindow(): BrowserWindow {
-  const mainWindow = new BrowserWindow({
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.focus();
+    return mainWindow;
+  }
+
+  mainWindow = new BrowserWindow({
     ...MAIN_WINDOW_CONFIG,
     ...(process.platform === "linux" ? { icon } : {}),
   });
 
-  mainWindow.on("ready-to-show", () => mainWindow.show());
+  mainWindow.on("ready-to-show", () => {
+    mainWindow?.show();
+    mainWindow?.maximize();
+  });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url);
