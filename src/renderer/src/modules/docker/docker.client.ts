@@ -23,7 +23,7 @@ export class DockerClient {
 
   public async ping(): Promise<true> {
     this.logger("ping");
-
+    
     const result = await window.electron.ipcRenderer.invoke("docker:ping");
     this.logger("ping => result", result);
 

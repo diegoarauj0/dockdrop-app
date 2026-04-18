@@ -5,9 +5,9 @@ import { Navigate } from "react-router";
 
 export function DockerErrorPage(): React.ReactNode {
   const { t } = useTranslation("home");
-  const { isError } = usePingQuery();
+  const { data } = usePingQuery();
 
-  if (!isError) {
+  if (data) {
     return <Navigate to="/dashboard" replace />;
   }
 

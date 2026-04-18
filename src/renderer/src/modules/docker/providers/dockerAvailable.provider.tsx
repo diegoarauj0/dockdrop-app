@@ -4,13 +4,13 @@ import { Navigate } from "react-router";
 import { ReactNode } from "react";
 
 export function DockerAvailableProvider({ children }: { children: ReactNode }): React.ReactNode {
-  const { isError, isLoading } = usePingQuery();
+  const { data, isLoading } = usePingQuery();
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
+  if (!data) {
     return <Navigate to="/docker-error" replace />;
   }
 
