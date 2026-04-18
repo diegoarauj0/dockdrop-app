@@ -17,8 +17,7 @@ asarUnpack:
 win:
   executableName: dockedrop
   target:
-    - msi
-    - exe
+    - nsis
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -40,4 +39,3 @@ publish:
 electronLanguages:
   - en
   - pt
-
